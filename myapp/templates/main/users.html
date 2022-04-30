@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %}
+
+
+
+{% block content %}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1>Welcome</h1>
+    <div class="col-sm-4">
+        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i><a href ="{{ url_for('users.insert')}}">Add New</a></button>
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+                 
+    {% for message in messages %}
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+    {{message}}
+                </div>
+   {% endfor %}
+     
+   {% endif %}
+   {% endwith %}
+
+<table class="table table-bordered table-light">
+<thead>
+<tr>
+  <th scope="col">#</th>
+  <th scope="col">Email</th>
+  <th scope="col">Name<th>
+  <th scope="col">Password</th>
+  <th scope="col">Actions</th>
+  
+ 
+</tr>
+</thead>
+
+
+{% for user in user  %}
+<tbody>
+<tr>
+  <th scope="row">{{user.id}}</th>
+  <td>{{ user.email }}</td>
+  <td>{{user.name }}</td>
+  <td></td>
+  <td>{{user.password}}</td>
+  <td>
+    <a href="{{ url_for('auth.delete_users', user_id=user.id)}}" class="delete"  onclick="return confirm('Are You Sure To Delete ?')" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+</td>
+
+</tr>
+
+</tbody>
+{% endfor %}
+</table>
+
+</div>
+{% endblock content %}
