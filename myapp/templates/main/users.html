@@ -5,9 +5,6 @@
 {% block content %}
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h1>Welcome</h1>
-    <div class="col-sm-4">
-        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i><a href ="{{ url_for('users.insert')}}">Add New</a></button>
-    </div>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
                  
@@ -22,6 +19,16 @@
      
    {% endif %}
    {% endwith %}
+
+    <div class="col-sm-4">
+        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i><a href ="{{ url_for('users.insertadmin')}}">Add New Admin</a></button>
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i><a href ="{{ url_for('users.insertuser')}}">Add New User</a></button>
+  </div>
+  <div class="col-sm-4">
+    <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i><a href ="{{ url_for('product.add_product')}}">Add New Product</a></button>
+</div>
 
 <table class="table table-bordered table-light">
 <thead>
@@ -47,6 +54,7 @@
   <td>{{user.password}}</td>
   <td>
     <a href="{{ url_for('auth.delete_users', user_id=user.id)}}" class="delete"  onclick="return confirm('Are You Sure To Delete ?')" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+    <a href="/edituser/{{user.id}}">Edit</a>
 </td>
 
 </tr>

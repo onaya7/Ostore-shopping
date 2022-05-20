@@ -76,11 +76,9 @@ def logout():
 ###### ADMIN #######
 
 @auth.route('/Users')
-@login_required
 def users():
-
        user = User.query.all()
-       login_user(user)
+      
        return render_template('main/users.html', title="Users", user=user)
 
 @auth.route('/<int:user_id>/delete/')

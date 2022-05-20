@@ -119,6 +119,11 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+body {
+  padding-top: 80px;
+
+}
+
 ::selection {
   background: #2a2a2a;
   color: #fff;

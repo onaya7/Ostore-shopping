@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from myapp.models import db
 from flask_login import LoginManager
 from myapp.models import User
+from myapp.product import product
 
 
 
@@ -22,9 +23,10 @@ from myapp.models import User
 #"""Application-factory pattern"""
 def create_app():
         #BLUEPRINTS REGISTRATION
-        app = Flask(__name__, instance_relative_config=True)
+        app = Flask(__name__, instance_relative_config=True, static_url_path="/static", static_folder="static")
         app.register_blueprint(admin, url_prefix='/')
         app.register_blueprint(auth)
+        app.register_blueprint(product)
      
 
         
@@ -36,13 +38,17 @@ def create_app():
         app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
         app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
         app.config["DEBUG"] = True
-        app.config['SECRET_KEY'] = 'ereryttfguguftdrdyg4e4325364@345'    
+        app.config['SECRET_KEY'] = 'ereryttfguguftdrdyg4e4325364@345'
+        app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'media/images/')
+       
+
+
+       
+        app.config['ALLOWED_EXTENSIONS'] = ['jpg', 'png']
 
         ##DATABASE MIGRATIONS
         migrate = Migrate()
 
-        from sqlalchemy import create_engine
-        engine = create_engine( 'sqlite:///app.db')
         ##FLASK LOGIN LOADER
         login_manager = LoginManager()
         login_manager.login_view = 'auth.login'
@@ -60,6 +66,7 @@ def create_app():
         ##INITIALIZATIONS
         db.init_app(app)
         migrate.init_app(app, db)
+        
 
     
 
