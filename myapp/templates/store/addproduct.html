@@ -5,7 +5,11 @@
   
       <form class="card-body" action="{{ url_for('product.add_product') }}" method="POST" enctype="multipart/form-data">
          <h5 class="card-title">Add New Item</h5>
+<<<<<<< HEAD
     {% with messages = get_flashed_messages() %}
+=======
+         {% with messages = get_flashed_messages() %}
+>>>>>>> f1a84880a597fa3b37aef1e7e7813303d02d418d
     {% if messages %}
                  
     {% for message in messages %}

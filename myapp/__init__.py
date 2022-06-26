@@ -1,5 +1,4 @@
 import os
-from venv import create
 from flask import Flask
 from myapp.admin import admin
 from myapp.auth import auth, login

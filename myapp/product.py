@@ -2,7 +2,6 @@ import os
 import uuid
 from myapp.auth import delete_users
 from myapp.models import Product, db
-from myapp.form import CustomerInfoForm
 from flask import (
     Flask,
     Blueprint,
@@ -35,17 +34,15 @@ def singleproduct(id):
     return render_template("store/productdetails.html", rows=rows)
 
 
-@product.route("/addproduct", methods=["GET", "POST"])
+@product.route('/addproduct', methods=['GET', 'POST'])
 def add_product():
-    if request.method == "POST":
-        image = request.files["image"]
-        filename = str(uuid.uuid1()) + os.path.splitext(image.filename)[1]
-
-        file_path = os.path.join(
-            current_app.config["UPLOAD_FOLDER"], secure_filename(filename)
-        )
-        name = request.form.get("name")
-        price = request.form.get("price")
+    if request.method == 'POST':
+        image = request.files['image']
+        filename = str(uuid.uuid1())+os.path.splitext(image.filename)[1]
+        
+        file_path = (os.path.join(current_app.config['UPLOAD_FOLDER'],secure_filename(filename)))
+        name = request.form.get('name')
+        price = request.form.get('price')
         new_pro = Product(name=name, price=price, filename=filename)
         image.save(file_path)
         db.session.add(new_pro)
@@ -112,3 +109,4 @@ def stripe_pay():
 @product.route('/thanks')
 def thanks():
     return render_template('store/thanks.html')
+
