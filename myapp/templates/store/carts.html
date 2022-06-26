@@ -1,0 +1,74 @@
+{% extends 'store/base.html' %}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+			 
+{% for message in messages %}
+			<div class="alert alert-success alert-dismissable" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="close">
+					<span aria-hidden="true">x</span>
+				</button>
+{{message}}
+			</div>
+{% endfor %}
+ 
+{% endif %}
+{% endwith %}
+    <!-- <h1>Your cart</h1> -->
+    <!-- <p>Your cart is currently empty.</p> -->
+    <!-- <a href="{{ url_for('users.home') }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">CONTINUE SHOPPING</a> -->
+<div id="cartItems" style="width:1120px; margin:40px auto 40px auto;">
+	<h2>Shopping Cart</h2>
+
+
+	{% if not cart %}
+	
+	<p>Your cart is currently empty.</p>
+    <a href="{{ url_for('product.products') }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">CONTINUE SHOPPING</a>
+
+	{% else %}
+		<div style=" text-align: right;">Price</div>
+		<div id="tableItems" >
+
+			{% for item in cart %}
+			
+				<hr>
+				<div id="itemName" style=" text-align: 	left;">
+					<img src="/media/{{ item.filename }}" class="card-img-top" alt="..." style="height: 200px; width:200px">
+					<span id="itemNameTag">{{item.name}}</span>
+
+					<span id="itemNameTag"><div style=" text-align: right">${{item.price}}</div></span>
+
+				    <form action="{{ url_for('auth.carts') }}" method="post">
+    					<div class="form-group">
+        
+    
+
+	        				<input type="hidden" name="idpd" value="{{item.id}}"/>
+						    <select class="form-control" id="exampleFormControlSelect1" style="width:70px; height: 30px" name="qty">
+						      <option disabled="Quantity">Qty</option>
+						      <option selected="QtyinCart">{{item.quantity}}</option>
+						      <option>1</option>
+						      <option>2</option>
+						      <option>3</option>
+						      <option>4</option>
+						      <option>5</option>
+						    </select>
+
+						    <button class="btn btn-primary" type="submit">Update</button>
+
+							<a href="/removeFromCart/{{item.id}}">Delete</a>
+						</div>
+					</form>
+				</div>
+
+			{% endfor %}
+			<hr>
+			<div id="total" style=" text-align: right">
+				<span id="subtotal">Subtotal: ${{subtotal}}</span>
+			</div>
+		</div>
+	{% endif %}
+</div>
+<!-- <a href="/checkout">Proceed to checkout</a> -->
+{% endblock content %}
