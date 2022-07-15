@@ -1,18 +1,27 @@
 import os
 from flask_login import login_user, login_required, current_user, logout_user
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import (
+    Blueprint,
+    render_template,
+    redirect,
+    url_for,
+    request,
+    flash,
+    current_app,
+    jsonify,
+)
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import stripe
 from myapp.models import db, User, Cart, Product, LineItem
 
 
 auth = Blueprint("auth", __name__)
 
 
-# @auth.route("/index")
-# def index():
+@auth.route("/index")
+def index():
 
-#     return render_template("store/index.html")
+    return render_template("store/index.html")
 
 
 @auth.route("/")
@@ -180,3 +189,118 @@ def removeFromCart(product_id):
     db.session.commit()
     flash("Your item has been removed from your cart!", "success")
     return redirect(url_for("auth.carts"))
+    return render_template("store/checkout.html")
+
+
+################ STRIPE  #########################
+
+
+@auth.route("/v1/products", methods=["POST"])
+def stripe_create_product():
+    event = None
+    payload = request.data
+    sig_header = request.headers["STRIPE_SIGNATURE"]
+    # endpoint_secret = current_app.config["WEBHOOK_SECRET_KEY"]
+    endpoint_secret = "whsec_zIHPWoLSFGvcWjOqbm3TWUXEvrJA6Q4G"
+
+    try:
+        event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
+    except ValueError as e:
+        # Invalid payload
+        raise e
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        print(e)
+        raise e
+
+    # Handle the event
+    print(event["type"])
+    if event["type"] == "product.created":
+        product = event["data"]["object"]
+    elif event["type"] == "product.deleted":
+        product = event["data"]["object"]
+    elif event["type"] == "product.updated":
+        product = event["data"]["object"]
+        print(dir(product))
+    else:
+        print("Unhandled event type {}".format(event["type"]))
+
+    return jsonify(success=True)
+
+
+@auth.route("/stripe_pay")
+def stripe_pay():
+    stripe.api_key = current_app.config["STRIPE_SECRET_KEY"]
+    session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        line_items=[
+            {
+                "price": "price_1LEWFoKEds1x3dYFRUoQOx45",
+                "quantity": 1,
+            }
+        ],
+        mode="payment",
+        success_url=url_for("auth.thanks", _external=True)
+        + "?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url=url_for("auth.carts", _external=True),
+    )
+    return {
+        "checkout_session_id": session["id"],
+        "checkout_public_key": current_app.config["STRIPE_PUBLIC_KEY"],
+    }
+
+
+@auth.route("/thanks")
+def thanks():
+    return render_template("store/thanks.html")
+
+
+@auth.route("/webhooks", methods=["POST"])
+def webhook():
+    event = None
+    payload = request.data
+    sig_header = request.headers.get("stripe-signature")
+    endpoint_secret = "whsec_eXShuqOQ4qs3xeYt7QL3K1WIFxlF0d5h"
+    try:
+        # print(payload)
+        # print(sig_header)
+        event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
+    except ValueError as e:
+        # Invalid payload
+        # print(e)
+        raise e
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        # print(e)
+        raise e
+
+    # Handle the event
+    print(event["type"])
+    if event["type"] == "payment_intent.canceled":
+        payment_intent = event["data"]["object"]
+    elif event["type"] == "payment_intent.created":
+        payment_intent = event["data"]["object"]
+    elif event["type"] == "payment_intent.succeeded":
+        payment_intent = event["data"]["object"]
+    elif event["type"] == "customer.created":
+        payment_intent = event["data"]["object"]
+    elif event["type"] == "checkout.session.completed":
+        payment_intent = event["data"]["object"]
+    elif event["type"] == "charge.succeeded":
+        payment_intent = event["data"]["object"]
+    # ... handle other event types
+    else:
+        print("Unhandled event type {}".format(event["type"]))
+
+    return jsonify(success=True)
+
+
+################# PAYSTACK ##########################
+@auth.route("/paystack_pay")
+def paystack():
+    return render_template("store/paystack.html")
+
+
+@auth.route("/success")
+def success():
+    return render_template("store/success.html")

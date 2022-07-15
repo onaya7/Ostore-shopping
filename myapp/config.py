@@ -17,3 +17,7 @@ class Config:
     ALLOWED_EXTENTIONS =['jpg', 'png']
     STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
     STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
+    
+    # Stripe CLI webhook secret for testing your endpoint locally.
+    WEBHOOK_SECRET_KEY = os.getenv('WEBHOOK_SECRET_KEY')
+    STRIPE_SIGNATURE = os.getenv('STRIPE_SIGNATURE ')

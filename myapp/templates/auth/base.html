@@ -12,18 +12,14 @@
 </head>
 
 <body>
-    <section class="hero is-dark is-fullheight">
+    <section class="hero is-link is-fullheight">
 
         <div class="hero-head">
             <nav class="navbar">
                 <div class="container">
                     <div id="navbarMenuHeroA" class="navbar-menu">
                         <div class="navbar-end">
-<<<<<<< HEAD
                             <a href="{{ url_for('auth.profile') }}" class="navbar-item">
-=======
-                            <a href="{{ url_for('auth.index') }}" class="navbar-item">
->>>>>>> f1a84880a597fa3b37aef1e7e7813303d02d418d
                                 Home
                             </a>
                             {% if current_user.is_authenticated %}

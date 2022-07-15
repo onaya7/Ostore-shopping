@@ -15,7 +15,6 @@ from flask import (
 )
 from flask_session import Session
 from werkzeug.utils import secure_filename
-import stripe
 
 
 product = Blueprint("product", __name__)
@@ -83,30 +82,4 @@ def delete_product(id):
     db.session.commit()
     return redirect(url_for("product.products"))
 
-@product.route("/checkout", methods=["POST", "GET"])
-def checkout():
-   
-    return render_template('store/checkout.html')
-
-@product.route('/stripe_pay')
-def stripe_pay():
-    stripe.api_key = current_app.config["STRIPE_SECRET_KEY"]
-    session = stripe.checkout.Session.create(
-        payment_method_types=['card'],
-        line_items=[{
-            'price': 'price_1LEWFoKEds1x3dYFRUoQOx45',
-            'quantity': 1,
-        }],
-        mode='payment',
-        success_url=url_for('product.thanks', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url=url_for('product.checkout', _external=True),
-    )
-    return {
-        'checkout_session_id': session['id'], 
-        'checkout_public_key': current_app.config['STRIPE_PUBLIC_KEY']
-    }
-
-@product.route('/thanks')
-def thanks():
-    return render_template('store/thanks.html')
 
