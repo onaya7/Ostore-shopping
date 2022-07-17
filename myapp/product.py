@@ -37,7 +37,10 @@ def singleproduct(id):
 def add_product():
     if request.method == 'POST':
         image = request.files['image']
+        print(image)
+
         filename = str(uuid.uuid1())+os.path.splitext(image.filename)[1]
+        print(image.filename)
         
         file_path = (os.path.join(current_app.config['UPLOAD_FOLDER'],secure_filename(filename)))
         name = request.form.get('name')

@@ -1,4 +1,5 @@
 import os
+import uuid
 from flask_login import login_user, login_required, current_user, logout_user
 from flask import (
     Blueprint,
@@ -13,6 +14,7 @@ from flask import (
 from werkzeug.security import generate_password_hash, check_password_hash
 import stripe
 from myapp.models import db, User, Cart, Product, LineItem
+from werkzeug.utils import secure_filename
 
 
 auth = Blueprint("auth", __name__)
@@ -210,18 +212,37 @@ def stripe_create_product():
         raise e
     except stripe.error.SignatureVerificationError as e:
         # Invalid signature
-        print(e)
         raise e
 
     # Handle the event
     print(event["type"])
-    if event["type"] == "product.created":
+    if event["type"] == "product.created" :
         product = event["data"]["object"]
+        product_id = product['id']
+        product_name = product["name"]
+        product_image = product["images"]
+        print(f'{product_id} {product_name}{product_image}')
+        
+        stripe_product = Product(stripe_id=product_id, name=product_name, price='1000',filename= "product_image")
+        db.session.add(stripe_product)
+        db.session.commit()
+    elif event["type"] == "price.created":
+        price = event["data"]["object"]
+        product_price = price["id"]
+        print(product_price)
+
+       
+        
+   
+
     elif event["type"] == "product.deleted":
         product = event["data"]["object"]
+        # product_id = product['id']
+        # stripe_delete = Product.query.get(product_id)
+        # db.session.delete(stripe_delete)
+        # db.session.commit()
     elif event["type"] == "product.updated":
         product = event["data"]["object"]
-        print(dir(product))
     else:
         print("Unhandled event type {}".format(event["type"]))
 
