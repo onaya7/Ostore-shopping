@@ -1,4 +1,6 @@
 import os
+import requests
+from tkinter import image_types
 import uuid
 import stripe
 from flask import (
@@ -10,14 +12,13 @@ from flask import (
     request,
     send_from_directory,
     current_app,
-    jsonify
+    jsonify,
 )
 from werkzeug.utils import secure_filename
 from myapp.models import Product, db
 
 
-
-product = Blueprint("product", __name__ , static_folder="static")
+product = Blueprint("product", __name__, static_folder="static")
 
 
 @product.route("/product")
@@ -33,18 +34,20 @@ def singleproduct(id):
     return render_template("store/productdetails.html", rows=rows)
 
 
-@product.route('/addproduct', methods=['GET', 'POST'])
+@product.route("/addproduct", methods=["GET", "POST"])
 def add_product():
-    if request.method == 'POST':
-        image = request.files['image']
+    if request.method == "POST":
+        image = request.files["image"]
         print(image)
 
-        filename = str(uuid.uuid1())+os.path.splitext(image.filename)[1]
+        filename = str(uuid.uuid1()) + os.path.splitext(image.filename)[1]
         print(image.filename)
-        
-        file_path = (os.path.join(current_app.config['UPLOAD_FOLDER'],secure_filename(filename)))
-        name = request.form.get('name')
-        price = request.form.get('price')
+
+        file_path = os.path.join(
+            current_app.config["UPLOAD_FOLDER"], secure_filename(filename)
+        )
+        name = request.form.get("name")
+        price = request.form.get("price")
         new_pro = Product(name=name, price=price, filename=filename)
         image.save(file_path)
         db.session.add(new_pro)
@@ -88,6 +91,7 @@ def delete_product(id):
 
 ############ Stripe api product#################
 
+
 @product.route("/v1/products", methods=["POST"])
 def stripe_create_product():
     event = None
@@ -107,26 +111,64 @@ def stripe_create_product():
 
     # Handle the event
     print(event["type"])
-    if event['type'] == 'price.created':
-      price = event['data']['object']
-      price_id = price["id"]
-      print(price_id)
-    elif event['type'] == 'price.deleted':
-      price = event['data']['object']
-    elif event['type'] == 'price.updated':
-      price = event['data']['object']
-    elif event['type'] == 'product.created':
-      product = event['data']['object']
-      product_id = product["id"]
-      print(product_id)
-    elif event['type'] == 'product.deleted':
-      product = event['data']['object']
-    elif event['type'] == 'product.updated':
-      product = event['data']['object']
+    if event["type"] == "product.created":
+        object = event["data"]["object"]
+        stripe_id = object["id"]
+        product = Product.query.filter_by(stripe_id=stripe_id).first()
+        if product:
+            import uuid
+            images = requests.get(object["images"][0])
+            u = str(uuid.uuid1())
+            p = ".png"
+            file = u+p
+            print(file)
+            file_path = os.path.join(current_app.config["UPLOAD_FOLDER"],file)
+            print(file_path)
+            save = open(file_path, "wb").write(images.content)
+            product.stripe_id = object["id"]
+            product.name = object["name"]
+            product.filename = file
+            print(product.filename)
+            db.session.commit()
+        else:
+            import uuid
+            images = requests.get(object["images"][0])
+            u = str(uuid.uuid1())
+            p = ".png"
+            file=u+p
+            file_path = os.path.join(current_app.config["UPLOAD_FOLDER"], file)
+            print(file_path)
+            save = open(file_path, "wb").write(images.content)
+            product = Product(stripe_id=object["id"], name=object["name"], filename= file,)
+            db.session.add(product)
+            db.session.commit()
+    elif event["type"] == "price.created":
+        price = event["data"]["object"]
+        stripe_id=price['product']
+        print(stripe_id)
+        product = Product.query.filter_by(stripe_id=stripe_id).first()
+        if product:
+            product.stripe_id = price["product"]
+            product.price = price["id"]
+            print(product.price)
+            db.session.commit()
+        else:
+            
+            prices = Product(stripe_id=price["product"], price=price["id"])
+            db.session.add(prices)
+            db.session.commit()
+
+    elif event["type"] == "product.updated":
+        product = event["data"]["object"]
+    elif event["type"] == "product.deleted":
+        poduct = event["data"]["object"]
+    elif event["type"] == "price.deleted":
+        price = event["data"]["object"]
+    elif event["type"] == "price.updated":
+        price = event["data"]["object"]
+
     # ... handle other event types
     else:
-      print('Unhandled event type {}'.format(event['type']))
+        print("Unhandled event type {}".format(event["type"]))
 
     return jsonify(success=True)
-
-

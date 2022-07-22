@@ -1,3 +1,8 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 .center {
     margin: auto;
@@ -14,10 +19,61 @@
     margin:20px 0;
 }
 
-input[type=email] , input[type=tel], input[type=text]{
-    width: 100%;
-    display: block;
-    border: 1px #f1f1f1 solid;
-    margin:5px 0 10px 0;
+
+/* Sign-up form */
+.form-body{
+    margin-top: 90px;
 }
 
+.form-container{
+    background-color: rgba(139, 126, 152, 0.908);
+    width:80%;
+    height: auto;
+    margin:auto;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.form-row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-text{
+    width: 50%;
+    height: 200px;
+    background: rgba(20, 20, 20, 0.057);
+    padding: 30px 0;
+    border-right: 5px solid rgba(30, 30, 30, .8);
+}
+.form-header{
+    text-align: center;
+}
+
+form{
+    width: 50%;
+    padding: 30px 0;
+    background: rgba(20, 40, 40, .8);
+    color: white;
+}
+label{
+    margin-top: 10px;
+}
+
+input{
+    width: 100%;
+    margin: 13px 20%;
+    font-size: 16px;
+    padding: 10px;
+    outline: none;
+    background: rgba(20, 20, 20, .2);
+}
+
+input[type="submit"]{
+    width: 10%;
+    border: 1px solid;
+    border-radius: 20%;
+    margin-top: 10px;
+    
+}

@@ -37,7 +37,7 @@ class  User(db.Model, UserMixin):
         flash("Your item has been added to your cart!", "sucess")
 
     def __repr__(self):
-        return f"User('{self.name}','{self.email}', '{self.id}')"
+        return f"User('{self.firstname}','{self.email}', '{self.id}')"
 
 
 class LineItem(db.Model):
@@ -68,12 +68,11 @@ class Product(db.Model):
     __tablename__ = "product"
     id = db.Column(db.Integer, primary_key=True)
     stripe_id = db.Column(db.String(64), unique=True)
-    name = db.Column(db.String(64), unique=True)
-    price = db.Column(db.String(78), nullable=False)
+    name = db.Column(db.String(64), nullable=True)
+    price = db.Column(db.String(78), nullable=True)
     filename = db.Column(
         db.String(89),
-        unique=True,
-        nullable=False,
+        nullable=True,
     )
     carts = db.relationship("LineItem", back_populates="product")
 

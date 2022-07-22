@@ -12,7 +12,9 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = bool(os.getenv('DEBUG'))
    
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS')
+    SQLALCHEMY_DATABASE_URI= os.getenv('SQLALCHEMY_DATABASE_URI')
     
     ALLOWED_EXTENTIONS =['jpg', 'png']
     STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
@@ -21,3 +23,13 @@ class Config:
     # Stripe CLI webhook secret for testing your endpoint locally.
     WEBHOOK_SECRET_KEY = os.getenv('WEBHOOK_SECRET_KEY')
     STRIPE_SIGNATURE = os.getenv('STRIPE_SIGNATURE ')
+
+     #Mails
+    MAIL_SERVER = os.getenv('MAIL_SERVER')
+    MAIL_PORT = os.getenv('MAIL_PORT')  
+#     MAIL_USE_TSL= bool(os.getenv('MAIL_USE_TSL'))
+#     MAIL_USE_SSL= bool(os.getenv('MAIL_USE_SSL'))
+    MAIL_USERNAME=os.getenv('MAIL_USERNAME')
+    MAIL_PASSWORD=os.getenv('MAIL_PASSWORD')
+    MAIL_DEFAULT_SENDER= os.getenv('MAIL_DEFAULT_SENDER')
+

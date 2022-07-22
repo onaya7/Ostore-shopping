@@ -158,7 +158,7 @@ def token_reset(token):
         db.session.commit()
         flash("Your password has been updated! You are now able to log in", "success")
         return redirect(url_for("user.login"))
-    return render_template("reset_with_token.html", token=token, form=form)
+    return render_template("user/reset_with_token.html", token=token, form=form)
 
 
 ##### USERS CART ROUTE ####

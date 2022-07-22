@@ -25,8 +25,6 @@ def create_app(config_name= Config):
         
         ##DATABASE CONFIG
         basedir = os.path.abspath(os.path.dirname(__file__))
-        app.config['SQLALCHEMY_DATABASE_URI'] =\
-                'sqlite:///' + os.path.join(basedir, 'app.db')
         app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'media/images/')       
         app.config['ALLOWED_EXTENSIONS'] = ['jpg', 'png']
 
@@ -35,7 +33,7 @@ def create_app(config_name= Config):
         #initializing flask-mail
         mail.init_app(app)
         ##initializing flask-migrate
-        migrate.init_app(app)
+        migrate.init_app(app,db)
         ##initializing flask login
 
         # initializing db
@@ -54,5 +52,7 @@ def create_app(config_name= Config):
         # paystack = Paystack(secret_key= app.config['PAYSTACK_SECRET_KEY'])
         # # to use transaction class
         # paystack.transaction.list()
+        app.config['MAIL_USE_TLS'] = True       
+        app.config['MAIL_USE_SSL'] = False
 
         return app

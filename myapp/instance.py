@@ -18,4 +18,4 @@ mail = Mail()
 
 
 # creating an instance of flask-migrate
-migrate = Migrate()
+migrate = Migrate(db)
