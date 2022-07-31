@@ -46,12 +46,7 @@ def create_app(config_name= Config):
             return User.query.get(int(user_id))
        
 
-          # ##### PAYSTACK #####
-        # app.config['PAYSTACK_SECRET_KEY'] = 'sk_test_6a9390b7f01159126150071a6b2b584cb5b8766a'
-        # app.config['PAYSTACK_PUBLIC_KEY'] = 'pk_test_0ecf4e6c096500b78cdd3681b282269385cbde9d'
-        # paystack = Paystack(secret_key= app.config['PAYSTACK_SECRET_KEY'])
-        # # to use transaction class
-        # paystack.transaction.list()
+        
         app.config['MAIL_USE_TLS'] = True       
         app.config['MAIL_USE_SSL'] = False
 

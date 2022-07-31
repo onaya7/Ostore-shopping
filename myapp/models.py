@@ -1,3 +1,4 @@
+from re import T
 from flask import flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -67,9 +68,9 @@ class Product(db.Model):
 
     __tablename__ = "product"
     id = db.Column(db.Integer, primary_key=True)
-    stripe_id = db.Column(db.String(64), unique=True)
     name = db.Column(db.String(64), nullable=True)
-    price = db.Column(db.String(78), nullable=True)
+    price =  db.Column(db.String(78), nullable=True)
+    
     filename = db.Column(
         db.String(89),
         nullable=True,

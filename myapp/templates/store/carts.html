@@ -37,9 +37,9 @@
 					<img src="/media/{{ item.filename }}" class="card-img-top" alt="..." style="height: 200px; width:200px">
 					<span id="itemNameTag">{{item.name}}</span>
 
-					<span id="itemNameTag"><div style=" text-align: right">${{item.price}}</div></span>
+					<span id="itemNameTag"><div style=" text-align: right">NGN{{item.price}}</div></span>
 
-				    <form action="{{ url_for('auth.carts') }}" method="post">
+				    <form action="{{ url_for('user.carts') }}" method="post">
     					<div class="form-group">
         
     
@@ -65,17 +65,180 @@
 			{% endfor %}
 			<hr>
 			<div id="total" style=" text-align: right">
-				<span id="subtotal">Subtotal: ${{subtotal}}</span>
-				<a href="#" id="buy_now_btn" class="btn btn-primary">Buy Now</a>
+				<span id="subtotal">Subtotal: NGN{{subtotal}}</span>
+				<button type="button" onclick="payWithPaystack()"> Pay </button>
 			</div>
-
-			<div id="total" style=" float:left">
-				 <a href="#" id="add_product" class="btn btn-primary">add product</a>
-			</div>
-
-
 		</div>
+
+		<!-- <div class="container">
+			<div class="table-wrap">
+				<table class="table table-responsive table-borderless">
+					<thead>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+						<th>Product</th>
+						<th>Price</th>
+						<th>Quantity</th>
+						<th>total</th>
+						<th>&nbsp;</th>
+					</thead>
+					<tbody>
+						<tr class="align-middle alert border-bottom" role="alert">
+							<td>
+								<input type="checkbox" id="check">
+							</td>
+							<td class="text-center">
+								<img class="pic"
+									src="https://www.freepnglogos.com/uploads/shoes-png/dance-shoes-png-transparent-dance-shoes-images-5.png"
+									alt="">
+							</td>
+							<td>
+								<div>
+									<p class="m-0 fw-bold">Sneakers Shoes 2020 For Men</p>
+									<p class="m-0 text-muted">Fugiat Voluptates quasi nemo,ipsa perferencis</p>
+								</div>
+							</td>
+							<td>
+								<div class="fw-600">$44.99</div>
+							</td>
+							<td class="d-">
+								<input class="input" type="text" placeholder="2">
+							</td>
+							<td>
+								$89.98
+							</td>
+							<td>
+								<div class="btn" data-bs-dismiss="alert">
+									<span class="fas fa-times"></span>
+								</div>
+							</td>
+						</tr>
+						<tr class="align-middle alert border-bottom" role="alert">
+							<td>
+								<input type="checkbox" id="check">
+							</td>
+							<td class="text-center">
+								<img class="pic"
+									src="https://www.freepnglogos.com/uploads/shoes-png/download-vector-shoes-image-png-image-pngimg-2.png"
+									alt="">
+							</td>
+							<td>
+								<div>
+									<p class="m-0 fw-bold">Sneakers Shoes 2020 For Men</p>
+									<p class="m-0 text-muted">Fugiat Voluptates quasi nemo,ipsa perferencis</p>
+								</div>
+							</td>
+							<td>
+								<div class="fw-600">$54.99</div>
+							</td>
+							<td class="d-">
+								<input class="input" type="text" placeholder="2">
+							</td>
+							<td>
+								$108.98
+							</td>
+							<td>
+								<div class="btn" data-bs-dismiss="alert">
+									<span class="fas fa-times"></span>
+								</div>
+							</td>
+						</tr>
+						<tr class="align-middle alert border-bottom" role="alert">
+							<td>
+								<input type="checkbox" id="check">
+							</td>
+							<td class="text-center">
+								<img class="pic"
+									src="https://www.freepnglogos.com/uploads/shoes-png/running-shoes-png-transparent-running-shoes-images-6.png"
+									alt="">
+							</td>
+							<td>
+								<div>
+									<p class="m-0 fw-bold">Sneakers Shoes 2020 For Men</p>
+									<p class="m-0 text-muted">Fugiat Voluptates quasi nemo,ipsa perferencis</p>
+								</div>
+							</td>
+							<td>
+								<div class="fw-600">$50.99</div>
+							</td>
+							<td class="d-">
+								<input class="input" type="text" placeholder="2">
+							</td>
+							<td>
+								$100.98
+							</td>
+							<td>
+								<div class="btn" data-bs-dismiss="alert">
+									<span class="fas fa-times"></span>
+								</div>
+							</td>
+						</tr>
+						<tr class="align-middle alert border-bottom" role="alert">
+							<td>
+								<input type="checkbox" id="check">
+							</td>
+							<td class="text-center">
+								<img class="pic"
+									src="https://www.freepnglogos.com/uploads/shoes-png/find-your-perfect-running-shoes-26.png"
+									alt="">
+							</td>
+							<td>
+								<div>
+									<p class="m-0 fw-bold">Sneakers Shoes 2020 For Men</p>
+									<p class="m-0 text-muted">Fugiat Voluptates quasi nemo,ipsa perferencis</p>
+								</div>
+							</td>
+							<td>
+								<div class="fw-600">$74.99</div>
+							</td>
+							<td>
+								<input class="input" type="text" placeholder="2">
+							</td>
+							<td>
+								$148.98
+							</td>
+							<td>
+								<div class="btn" data-bs-dismiss="alert">
+									<span class="fas fa-times"></span>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div> -->
+
+
 	{% endif %}
 </div>
 <!-- <a href="/checkout">Proceed to checkout</a> -->
 {% endblock content %}
+
+{% block scripts %}
+    <script>
+        function payWithPaystack(){
+            var handler = PaystackPop.setup({
+                key: "{{ paystack_pk }}",
+                email: "{{ email }}",
+                amount: "{{ subtotal }}" * 100,
+                ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                metadata: {
+                    custom_fields: [
+                        {
+                            display_name: "{{name}}",
+                            variable_name: "mobile_number",
+                            value: "+2348012345678"
+                        }
+                    ]
+                },
+                callback: function(response){
+                    // alert('success. transaction ref is ' + response.reference);
+                },
+                onClose: function(){
+                    alert('window closed');
+                }
+            });
+            handler.openIframe();
+        }
+    </script>
+{% endblock %}

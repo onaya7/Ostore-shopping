@@ -1730,7 +1730,7 @@ Single Product Page
 --------------------------------------------- 
 */
 
-/* #product {
+ #product {
   margin-top: 80px;
 }
 
@@ -1907,7 +1907,7 @@ Single Product Page
   
   .quantity.buttons_added .minus:focus,
  .quantity.buttons_added .plus:focus {
-  outline: none; } */ 
+  outline: none; } 
 
 
 

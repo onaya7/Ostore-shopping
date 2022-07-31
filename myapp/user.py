@@ -1,3 +1,5 @@
+import email
+import os
 from flask_login import login_user, login_required, current_user, logout_user
 from flask import (
     Blueprint,
@@ -10,6 +12,7 @@ from flask import (
     jsonify,
 )
 from flask_mail import Message
+from platformdirs import user_config_path
 from myapp.models import db, User, Cart, Product, LineItem
 from myapp.forms import  RegistrationForm, LoginForm, UpdateAccountForm, EmailForm, PasswordForm
 from myapp.instance import bcrypt , mail
@@ -55,6 +58,7 @@ def register():
             email=form.email.data,
             password=hashed_password,
         )
+        
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
@@ -173,11 +177,33 @@ def getLoginDetails():
         noOfItems = 0
 
     return noOfItems
+
+@user.route("/addToCart/<int:product_id>")
+@login_required
+def addToCart(product_id):
+
+    row = Cart.query.filter_by(product_id=product_id, user=current_user).first()
+    if row:
+        # if in cart update quantity : +1
+        row.quantity += 1
+        db.session.commit()
+        flash("This item is already in your cart, 1 quantity added!", "success")
+
+        # if not, add item to cart
+    else:
+        user = User.query.get(current_user.id)
+        user.add_to_cart(product_id)
+    return redirect(url_for("product.products"))
+
 @user.route("/carts", methods=["GET", "POST"])
 @login_required
 def carts():
+    paystack_pk = os.getenv("PAYSTACK_PUBLIC_KEY")
     noOfItems = getLoginDetails()
     # display items in cart
+    user = User.query.filter_by(id=current_user.id).first()
+    email = user.email
+    name = user.firstname
     cart = (
         Product.query.join(Cart)
         .add_columns(
@@ -207,8 +233,9 @@ def carts():
         subtotal = 0
         for item in cart:
             subtotal += int(item.price) * int(item.quantity)
+        print(email)
     return render_template(
-        "store/carts.html", cart=cart, noOfItems=noOfItems, subtotal=subtotal
+        "store/carts.html", cart=cart, noOfItems=noOfItems, subtotal=subtotal, paystack_pk=paystack_pk , email=email , name=name
     )
 
 
