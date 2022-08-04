@@ -38,6 +38,8 @@ def singleproduct(id):
     return render_template("store/productdetails.html", rows=rows)
 
 
+
+
 @product.route("/addproduct", methods=["GET", "POST"])
 def add_product():
     if request.method == "POST":

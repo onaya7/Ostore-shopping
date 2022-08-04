@@ -29,7 +29,7 @@ user = Blueprint("user", __name__ , static_folder="static")
 @user.route("/home")
 
 def home():
-    # noOfItems = getLoginDetails()
+    
     return render_template("store/home.html")
     
 @user.route("/about")
@@ -122,7 +122,7 @@ def reset_password():
         form_mail = form.email.data
 
         # sending the email confirmation link
-        msg = Message("Confirm Email", recipients=[form_mail])
+        msg = Message("Password Reset Request", recipients=[form_mail])
 
         token = ts.dumps(form_mail, salt="password-reset-salt")
 
@@ -134,7 +134,7 @@ def reset_password():
             "An email has been sent with instructions to reset your password.", "info"
         )
 
-        return redirect(url_for("user.home"))
+        return redirect(url_for("user.reset_password"))
     return render_template("user/reset_password.html", form=form)
 
 
@@ -144,11 +144,11 @@ def token_reset(token):
     #     return redirect(url_for('users.home'))
     try:
         # token generated
-        email = ts.loads(token, salt="password-reset-salt", max_age=36000)
+        email = ts.loads(token, salt="password-reset-salt", max_age=200)
         print(email)
     except SignatureExpired:
-        flash("The password reset link is invalid or has expired.", "info")
-        return redirect(url_for("users.login"))
+        flash("The password reset link is invalid or has expired.", "warning")
+        return redirect(url_for("user.login"))
     form = PasswordForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8" )
