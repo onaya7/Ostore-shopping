@@ -11,7 +11,7 @@ from myapp.models import Admin
 
 
 
-admin=Blueprint('users', __name__,)
+admin=Blueprint('admin', __name__,)
 
 ####   ADMIN AUTHENTICATION   #######
 
@@ -79,6 +79,3 @@ def delete_users(user_id):
 
 
 #### AUTHENTICATION END ######
-
-
-

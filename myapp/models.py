@@ -59,6 +59,8 @@ class Cart(db.Model):
     user_id = db.Column(db.Integer, ForeignKey("user.id"), nullable=True)
     user = relationship("User", back_populates="cart")
     quantity = db.Column(db.Integer, nullable=False, default=1)
+    is_open = db.Column(db.Boolean, default=False, nullable=False)
+    is_processed = db.Column(db.Boolean, default=False, nullable = False)
 
     def __repr__(self):
         return f"Cart('id:{self.id}','user_id:{self.user_id}')"

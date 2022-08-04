@@ -102,79 +102,7 @@ def delete_product(id):
     return redirect(url_for("product.products"))
 
 
-############ Stripe api product#################
-
-
-@product.route("/v1/products", methods=["POST"])
-def stripe_create_product():
-    event = None
-    payload = request.data
-    sig_header = request.headers["STRIPE_SIGNATURE"]
-    # endpoint_secret = current_app.config["WEBHOOK_SECRET_KEY"]
-    endpoint_secret = "whsec_tIJsQPPo6b3YQnwbgRKcISjKnudNO0Zc"
-
-    try:
-        event = stripe.Webhook.construct_event(payload, sig_header, endpoint_secret)
-    except ValueError as e:
-        # Invalid payload
-        raise e
-    except stripe.error.SignatureVerificationError as e:
-        # Invalid signature
-        raise e
-
-    # Handle the event
-    print(event["type"])
-    if event["type"] == "product.created":
-        object = event["data"]["object"]
-        product_id = object["id"]
-        product = Product.query.filter_by(stripe_id=product_id).first()
-        import uuid
-
-        file = str(uuid.uuid1()) + ".png"
-        file_path = os.path.join(current_app.config["UPLOAD_FOLDER"], file)
-        images = requests.get(object["images"][0])
-        save = open(file_path, "wb").write(images.content)
-        if product:
-            print("true")
-            product.stripe_id = object["id"]
-            product.name = object["name"]
-            product.filename = file
-            db.session.commit()
-        else:
-            print("false")
-            p = Product(stripe_id=object["id"], name=object["name"], filename=file)
-            db.session.add(p)
-            db.session.commit()
-    elif event["type"] == "price.created":
-        price = event["data"]["object"]
-        product_id = price["product"]
-        print(product_id)
-        product = Product.query.filter_by(stripe_id=product_id).first()
-        if product:
-            print("No")
-            product.price = price["id"]
-            db.session.commit()
-        else:
-            print("yes")
-            prices = Product(stripe_id=price["product"], price=price["id"])
-            db.session.add(prices)
-            db.session.commit()
-
-    elif event["type"] == "product.updated":
-        product = event["data"]["object"]
-    elif event["type"] == "product.deleted":
-        product = event["data"]["object"]
-    elif event["type"] == "price.deleted":
-        price = event["data"]["object"]
-    elif event["type"] == "price.updated":
-        price = event["data"]["object"]
-
-    # ... handle other event types
-    else:
-        print("Unhandled event type {}".format(event["type"]))
-
-    return jsonify(success=True)
-
+############ Paystack api product#################
 
 @product.route("/checkout_paystack", methods=["POST", "GET"])
 def checkout():
@@ -185,8 +113,8 @@ def checkout():
 
 @product.route("/verify_paystack", methods=["POST","GET"])
 def paystack_callback():
-    reference = requests.get_json().get("reference")
-
+    reference = requests.get("reference")
+    print(reference)
     url = f"http://api.paystack.co/transaction/verify/{reference}"
     headers = {
         "Authorization": f"Bearer {os.getenv('PAYSTACK_SECRET_KEY')}",
