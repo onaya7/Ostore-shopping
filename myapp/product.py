@@ -1,12 +1,10 @@
-from math import prod
 import os
 import hmac
 import hashlib
 import json
 import requests
-from tkinter import image_types
 import uuid
-import stripe
+from flask_login import current_user
 from flask import (
     Blueprint,
     render_template,
@@ -19,7 +17,8 @@ from flask import (
     jsonify,
 )
 from werkzeug.utils import secure_filename
-from myapp.models import Product, db
+from myapp.models import Product, Cart, db
+from myapp.user import getLoginDetails
 
 
 product = Blueprint("product", __name__, static_folder="static")
@@ -38,8 +37,6 @@ def singleproduct(id):
     return render_template("store/productdetails.html", rows=rows)
 
 
-
-
 @product.route("/addproduct", methods=["GET", "POST"])
 def add_product():
     if request.method == "POST":
@@ -50,9 +47,9 @@ def add_product():
         )
         name = request.form.get("name")
         price = request.form.get("price")
-
-        new_pro = Product(name=name, price=price, filename=filename)
         image.save(file_path)
+        new_pro = Product(name=name, price=price, filename=filename)
+
         db.session.add(new_pro)
         db.session.commit()
         flash(f"A new product has been added sucessfully")
@@ -65,13 +62,15 @@ def media(filename):
         current_app.config["UPLOAD_FOLDER"], filename, as_attachment=True
     )
 
+
 def save_image():
     image = request.files["image"]
     filename = str(uuid.uuid1()) + os.path.splitext(image.filename)[1]
     file_path = os.path.join(
-            current_app.config["UPLOAD_FOLDER"], secure_filename(filename)
-        )
+        current_app.config["UPLOAD_FOLDER"], secure_filename(filename)
+    )
     image.save(file_path)
+
 
 @product.route("/editproduct<int:id>", methods=["GET", "POST"])
 def edit_product(id):
@@ -90,7 +89,7 @@ def edit_product(id):
         rows.filename = filename
         rows.name = name
         rows.price = price
-        db.session.commit() 
+        db.session.commit()
         flash(f"Product {rows.id} has been edited")
         return redirect(url_for("product.edit_product", id=id))
     return render_template("store/editproduct.html", rows=rows)
@@ -106,6 +105,7 @@ def delete_product(id):
 
 ############ Paystack api product#################
 
+
 @product.route("/checkout_paystack", methods=["POST", "GET"])
 def checkout():
     paystack_pk = os.getenv("PAYSTACK_PUBLIC_KEY")
@@ -113,7 +113,7 @@ def checkout():
     return render_template("store/paystack.html", paystack_pk=paystack_pk)
 
 
-@product.route("/verify_paystack", methods=["POST","GET"])
+@product.route("/verify_paystack", methods=["POST", "GET"])
 def paystack_callback():
     reference = requests.get("reference")
     print(reference)
@@ -143,8 +143,11 @@ def paystack_webhook():
     if sig_header == computed_hmac:
         if json_body["event"] == "charge.success":
             data = json_body["data"]
-            print(json_body["event"])
-
+            if data["status"] == "success":
+                print(data)
+                #cart = Cart.query.filter_by(user=current_user).first()
+                #print(cart)
+                
         else:
             print("Unhandled event type {}".format(json_body["event"]))
     return jsonify(success=True)

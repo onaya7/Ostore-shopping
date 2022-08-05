@@ -33,7 +33,7 @@
   
         <div class="form-group">
             <label for="exampleFormControlFile1">Product Image</label>
-          <input type="file" class="form-control-file" name="image" value="{{ rows.filename }}" accept="image/">
+          <input type="file" class="form-control-file" name="image" value="http://localhost:8000/media/{{ rows.filename }}" accept="image/">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

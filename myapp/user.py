@@ -164,13 +164,10 @@ def token_reset(token):
 
 
 ##### USERS CART ROUTE ####
-@user.route('/cart')
-def cart():
-    return render_template('store/cart.html')
 
 def getLoginDetails():
     if current_user.is_authenticated:
-        noOfItems = Cart.query.filter_by(user=current_user).count()
+        noOfItems = Cart.query.filter_by(user=current_user).first()
     else:
         noOfItems = 0
 
@@ -240,12 +237,12 @@ def carts():
 @user.route("/removeFromCart/<int:product_id>")
 @login_required
 def removeFromCart(product_id):
-    item_to_remove = LineItem.query.filter_by(product_id=product_id).first()
+    item_to_remove =Cart.query.filter_by(user=current_user).first()
     print(item_to_remove)
     db.session.delete(item_to_remove)
     db.session.commit()
     flash("Your item has been removed from your cart!", "success")
-    return redirect(url_for("auth.carts"))
+    return redirect(url_for("user.carts"))
     
 
 

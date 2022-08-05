@@ -33,6 +33,7 @@ class  User(db.Model, UserMixin):
         c = Cart(product_id=product_id, user_id=self.id)
         line_item = LineItem(product_id=product_id)
         c.line_items.append(line_item)
+        print(c)
         db.session.add(c)
         db.session.commit()
         flash("Your item has been added to your cart!", "sucess")
