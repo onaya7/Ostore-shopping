@@ -2,13 +2,12 @@ import os
 from flask import Flask
 from myapp.admin import admin
 from myapp.user import user
-from myapp.charge import charge
 from myapp.instance import login_manager ,bcrypt, mail ,migrate
 from myapp.models import db
 from myapp.models import User
 from myapp.product import product
 from myapp.config import Config
-from paystackapi.paystack import Paystack
+
 
 
 
