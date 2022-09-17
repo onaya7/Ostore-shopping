@@ -4,7 +4,7 @@ import hashlib
 import json
 import requests
 import uuid
-from flask_login import current_user
+from flask_login import current_user, user_accessed
 from flask import (
     Blueprint,
     render_template,
@@ -17,7 +17,7 @@ from flask import (
     jsonify,
 )
 from werkzeug.utils import secure_filename
-from myapp.models import Product, Cart, db
+from myapp.models import Product, Cart, User, db
 from myapp.user import getLoginDetails
 
 
@@ -143,11 +143,22 @@ def paystack_webhook():
     if sig_header == computed_hmac:
         if json_body["event"] == "charge.success":
             data = json_body["data"]
-            if data["status"] == "success":
-                print(data)
-                #cart = Cart.query.filter_by(user=current_user).first()
-                #print(cart)
-                
+            email = data["metadata"]["custom_fields"][0]["variable_name"]
+            user = User.query.filter_by(email=email).first()
+            print(user)
+            user = user.id
+            print(user)
+            cart = Cart.query.filter_by(user_id=user).first()
+            print(cart)
+            cart_user=cart.user_id
+            print(cart)
+
+            
+            if data["status"] == 'success':
+                cart = Cart.query.filter_by(user_id=cart_user).first()
+                cart.is_processed = int(True)
+                db.session.commit()
+
         else:
             print("Unhandled event type {}".format(json_body["event"]))
     return jsonify(success=True)

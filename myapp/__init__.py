@@ -20,7 +20,6 @@ def create_app(config_name= Config):
         app.register_blueprint(admin, url_prefix='/')
         app.register_blueprint(product)
         app.register_blueprint(user)
-        app.register_blueprint(charge)
         app.config.from_object(Config)
         
         ##DATABASE CONFIG

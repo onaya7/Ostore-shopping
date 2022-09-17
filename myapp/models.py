@@ -29,11 +29,11 @@ class  User(db.Model, UserMixin):
     cart = db.relationship("Cart", back_populates="user", lazy=True)
 
     def add_to_cart(self, product_id):
-        p = Product(id=self.id)
+        # p = Product(id=self.id)
+        p = Product.query.filter_by(id=self.id).first()
         c = Cart(product_id=product_id, user_id=self.id)
         line_item = LineItem(product_id=product_id)
         c.line_items.append(line_item)
-        print(c)
         db.session.add(c)
         db.session.commit()
         flash("Your item has been added to your cart!", "sucess")
