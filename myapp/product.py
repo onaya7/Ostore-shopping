@@ -30,6 +30,7 @@ def products():
     return render_template("store/products.html", rows=rows)
 
 
+
 @product.route("/product<int:id>")
 def singleproduct(id):
     rows = Product.query.filter_by(id=id).first()

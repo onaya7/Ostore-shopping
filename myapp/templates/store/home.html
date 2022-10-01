@@ -2,532 +2,187 @@
 
 
 {% block content %}
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                        
-            {% for message in messages %}
-                        <div class="alert alert-success alert-dismissable" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                                <span aria-hidden="true">x</span>
-                            </button>
-                            
-                        {{message}}
-                        </div>
-            {% endfor %}
-                
-            {% endif %}
-            {% endwith %}
-    <!-- ***** Main Banner Area Start ***** -->
-    <div class="main-banner" id="top">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="left-content">
-                        <div class="thumb">
-                            <div class="inner-content">
-                                <h4>We Are Ostore</h4>
-                                <span>We are here to give you the best of our service </span>
-                                <div class="main-border-button">
-                                    <a href="#">Purchase Now!</a>
-                                </div>
-                            </div>
-                            <img src="static/images/left-banner-image.jpg" alt="">
-                        </div>
-                    </div>
+          {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                  <div class="success-feedback">
+                  {% for message in messages %}
+                   <span>{{message}}</span>
+                  {% endfor %}
                 </div>
-                <div class="col-lg-6">
-                    <div class="right-content">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>Women</h4>
-                                            <span>Best Clothes For Women</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>Women</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="static/images/baner-right-image-01.jpg">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>Men</h4>
-                                            <span>Best Clothes For Men</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>Men</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="static/images/baner-right-image-02.jpg">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>Kids</h4>
-                                            <span>Best Clothes For Kids</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>Kids</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="static/images/baner-right-image-03.jpg">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="right-first-image">
-                                    <div class="thumb">
-                                        <div class="inner-content">
-                                            <h4>Accessories</h4>
-                                            <span>Best Trend Accessories</span>
-                                        </div>
-                                        <div class="hover-content">
-                                            <div class="inner">
-                                                <h4>Accessories</h4>
-                                                <p>Lorem ipsum dolor sit amet, conservisii ctetur adipiscing elit incid.</p>
-                                                <div class="main-border-button">
-                                                    <a href="#">Discover More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img src="static/images/baner-right-image-04.jpg">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ***** Main Banner Area End ***** -->
-
-    <!-- ***** Men Area Starts ***** -->
-    <section class="section" id="men">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="section-heading">
-                        <h2>Men's Latest</h2>
-                        <span>Details to details is what makes Ostore different from the shopping platforms</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="men-item-carousel">
-                        <div class="owl-men-item owl-carousel">
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="productdetails.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="static/images/men-01.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Classic Spring</h4>
-                                    <span>$120.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="productdetails.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="static/images/men-02.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Air Force 1 X</h4>
-                                    <span>$90.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="productdetails.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="static/images/men-03.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Love Nana ‘20</h4>
-                                    <span>$150.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="productdetails.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="static/images/men-01.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Classic Spring</h4>
-                                    <span>$120.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ***** Men Area Ends ***** -->
-
-    <!-- ***** Women Area Starts ***** -->
-    <section class="section" id="women">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="section-heading">
-                        <h2>Women's Latest</h2>
-                        <span>Details to details is what makes Ostore different from the shopping platforms</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="women-item-carousel">
-                        <div class="owl-women-item owl-carousel">
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="productdetails.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="static/images/women-01.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>New Green Jacket</h4>
-                                    <span>$75.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="productdetails.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="static/images/women-02.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Classic Dress</h4>
-                                    <span>$45.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="productdetails.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="static/images/women-03.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Spring Collection</h4>
-                                    <span>$130.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="productdetails.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="static/images/women-01.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Classic Spring</h4>
-                                    <span>$120.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ***** Women Area Ends ***** -->
-
-    <!-- ***** Kids Area Starts ***** -->
-    <section class="section" id="kids">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="section-heading">
-                        <h2>Kid's Latest</h2>
-                        <span>Details to details is what makes Ostore different from the shopping platforms</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="kid-item-carousel">
-                        <div class="owl-kid-item owl-carousel">
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="productdetails.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="static/images/kid-01.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>School Collection</h4>
-                                    <span>$80.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="productdetails.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="static/images/kid-02.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Summer Cap</h4>
-                                    <span>$12.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="productdetails.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="static/images/kid-03.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Classic Kid</h4>
-                                    <span>$30.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="thumb">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li><a href="productdetails.html"><i class="fa fa-eye"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-star"></i></a></li>
-                                            <li><a href="productdetails.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <img src="static/images/kid-01.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <h4>Classic Spring</h4>
-                                    <span>$120.00</span>
-                                    <ul class="stars">
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ***** Kids Area Ends ***** -->
+                {% endif %}
+              {% endwith %}
 
 
-    <!-- ***** Subscribe Area Starts ***** -->
-    <div class="subscribe">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="section-heading">
-                        <h2>By Subscribing To Our Newsletter You Can Get 30% Off</h2>
-                        <span>Details to details is what makes Ostore different from the shopping platforms</span>
+            <!-- home -->
+        <section class="home" id="home">
+            <div class="home-text">
+                <h1>Men's New <br> <span>Arrivals</span></h1>
+                <p>New colors, now also available in men's sizing</p>
+                <a href="#" class="btn">View collection</a>
+            </div>
+        </section>
+
+         
+        <!-- featured -->
+        <section class="featured" id="featured">
+            <div class="center-text">
+                <h2>Featured Categories</h2>
+            </div>
+            <div class="featured-content">
+                <div class="row">
+                    <img src="{{ url_for('static', filename='img/fea1.jpg') }}" alt="fea1">
+                    <div class="fea-text">
+                        <h5>Mens</h5>
+                        <p>10 items</p>
                     </div>
-                    <form id="subscribe" action="" method="get">
-                        <div class="row">
-                          <div class="col-lg-5">
-                            <fieldset>
-                              <input name="name" type="text" id="name" placeholder="Your Name" required="">
-                            </fieldset>
-                          </div>
-                          <div class="col-lg-5">
-                            <fieldset>
-                              <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email Address" required="">
-                            </fieldset>
-                          </div>
-                          <div class="col-lg-2">
-                            <fieldset>
-                              <button type="submit" id="form-submit" class="main-dark-button"><i class="fa fa-paper-plane"></i></button>
-                            </fieldset>
-                          </div>
-                        </div>
-                    </form>
+                    <div class="arrow">
+                        <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
+                    </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="row">
-                        <div class="col-6">
-                            <ul>
-                                <li>Store Location:<br><span>Sunny Isles Beach, FL 33160, United States</span></li>
-                                <li>Phone:<br><span>010-020-0340</span></li>
-                                <li>Office Location:<br><span>North Miami Beach</span></li>
-                            </ul>
-                        </div>
-                        <div class="col-6">
-                            <ul>
-                                <li>Work Hours:<br><span>07:30 AM - 9:30 PM Daily</span></li>
-                                <li>Email:<br><span>info@company.com</span></li>
-                                <li>Social Media:<br><span><a href="#">Facebook</a>, <a href="#">Instagram</a>, <a href="#">Behance</a>, <a href="#">Linkedin</a></span></li>
-                            </ul>
-                        </div>
+
+                <div class="row">
+                    <img src="{{ url_for('static', filename='img/fea2.jpg') }}" alt="fea2">
+                    <div class="fea-text">
+                        <h5>Women</h5>
+                        <p>10 items</p>
+                    </div>
+                    <div class="arrow">
+                        <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <img src="{{ url_for('static', filename='img/fea3.jpg') }}" alt="fea3">
+                    <div class="fea-text">
+                        <h5>Kids</h5>
+                        <p>10 items</p>
+                    </div>
+                    <div class="arrow">
+                        <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <img src="{{ url_for('static', filename='img/fea4.jpg') }}" alt="fea4">
+                    <div class="fea-text">
+                        <h5>Sneakers</h5>
+                        <p>10 items</p>
+                    </div>
+                    <div class="arrow">
+                        <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <img src="{{ url_for('static', filename='img/fea5.jpg') }}" alt="fea5">
+                    <div class="fea-text">
+                        <h5>Heels</h5>
+                        <p>10 items</p>
+                    </div>
+                    <div class="arrow">
+                        <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <img src="{{ url_for('static', filename='img/fea6.jpg') }}" alt="fea6">
+                    <div class="fea-text">
+                        <h5>Watches</h5>
+                        <p>10 items</p>
+                    </div>
+                    <div class="arrow">
+                        <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- ***** Subscribe Area Ends ***** -->
+        </section>
+
+        <!-- cta -->
+        <section class="cta" id="cta">
+            <div class="cta-text">
+                <h6>SUMMER ON SALE</h6>
+                <h4>20% OFF <br> NEW ARRIVAL</h4>
+                <a href="#" class="btn">Shop Now</a>
+            </div>
+        </section>
+
+
+        <!-- new arrivals -->
+        <section class="new" id="new">
+            <div class="center-text">
+                <h2>New Arrivals</h2>
+            </div>
+
+            <div class="new-content">
+
+                <div class="box">
+                    <img src="{{ url_for('static', filename='img/tren1.jpg') }}">
+                    <h5>Lorem Ipsum dizgi</h5>
+                    <h6>$188</h6>
+                    <div class="sale">
+                        <h4>Sale</h4>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <img src="{{ url_for('static', filename='img/tren2.jpg') }}">
+                    <h5>Lorem Ipsum dizgi</h5>
+                    <h6>$188</h6>
+                    <div class="sale">
+                        <h4>Sale</h4>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <img src="{{ url_for('static', filename='img/tren3.jpg') }}">
+                    <h5>Lorem Ipsum dizgi</h5>
+                    <h6>$188</h6>
+                    <div class="sale">
+                        <h4>Sale</h4>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <img src="{{ url_for('static', filename='img/tren4.jpg') }}">
+                    <h5>Lorem Ipsum dizgi</h5>
+                    <h6>$188</h6>
+                    <div class="sale">
+                        <h4>Sale</h4>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- brand -->
+        <section class="brand">
+            <div class="brand-content">
+                <div class="main">
+                    <img src="{{ url_for('static', filename='img/brand1.png') }}" alt'="brand1">
+                </div>
+
+                <div class="main">
+                    <img src="{{ url_for('static', filename='img/brand2.png') }}" alt="brand2">
+                </div>
+
+                <div class="main">
+                    <img src="{{ url_for('static', filename='img/brand3.png') }}" alt="brand3">
+                </div>
+
+                <div class="main">
+                    <img src="{{ url_for('static', filename='img/brand4.png') }}" alt="brand4">
+                </div>
+
+                <div class="main">
+                    <img src="{{ url_for('static', filename='img/brand5.png') }}" alt="brand5">
+                </div>
+
+                <div class="main">
+                    <img src="{{ url_for('static', filename='img/brand6.png') }}" alt="brand6">
+                </div>
+            </div>
+        
+        </section>
+    
 {% endblock  %}
     <!-- ***** Footer Start ***** -->
