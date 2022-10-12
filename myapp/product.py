@@ -27,48 +27,51 @@ product = Blueprint("product", __name__, static_folder="static")
 @product.route("/product")
 def products():
     rows = Product.query.all()
-    return render_template("store/products.html", rows=rows)
+    return render_template("product/products.html", rows=rows)
 
 @product.route("/product<int:id>")
 def singleproduct(id):
     rows = Product.query.filter_by(id=id).first()
-
-    return render_template("store/productdetails.html", rows=rows)
+    return render_template("product/single_product.html", rows=rows)
 
 @product.route("/category/<int:id>")
 def single_category(id):
     rows =Categories.query.filter_by(id=id).first()
 
-    return render_template("store/single_category.html", rows=rows)
+    return render_template("product/single_category.html", rows=rows)
 
 # query product  by category route
 @product.route("/category/men")
 def men():
     men=Categories.query.filter_by(name='men').first()
     men = men.product
-    # for product in men:
-    #     print(product.name)
-    return render_template("store/men.html", men=men)
+    return render_template("product/men.html", men=men)
 
 @product.route("/category/women")
 def women():
-
-    return render_template("store/women.html")
+    women = Categories.query.filter_by(name='women').first()
+    women = women.product
+    return render_template("product/women.html", women=women)
 
 @product.route("/category/kids")
 def kids():
 
-    return render_template("store/kids.html")
+    return render_template("product/kids.html")
 
 @product.route("/category/sneakers")
 def sneakers():
 
-    return render_template("store/sneakers.html")
+    return render_template("product/sneakers.html")
 
 @product.route("/category/heels")
 def heels():
 
-    return render_template("store/heels.html")
+    return render_template("product/heels.html")
+
+@product.route("/category/watches")
+def watches():
+
+    return render_template("product/watches.html")
 # query product  by category route ends......
 # ----------------------------
 
@@ -77,14 +80,9 @@ def get_categories(name):
     category_id =categories.id
     return category_id
 
-def save_image():
-        image = request.files["image"]
-        filename = str(uuid.uuid1()) + os.path.splitext(image.filename)[1]
-        file_path = os.path.join(
-            current_app.config["UPLOAD_FOLDER"], secure_filename(filename)
-        )
-        save = image.save(file_path)
-        return save
+
+      
+    
 
 
 @product.route("/addproduct", methods=["GET", "POST"])
@@ -93,21 +91,26 @@ def add_product():
     if request.method == "POST":
         image = request.files["image"]
         filename = str(uuid.uuid1()) + os.path.splitext(image.filename)[1]
+        print(filename)
         file_path = os.path.join(
             current_app.config["UPLOAD_FOLDER"], secure_filename(filename)
         )
+        save_file=image.save(file_path)
+        print(save_file)
+       
+        
         name = request.form.get("name")
         price = request.form.get("price")
         description = request.form.get("description")
         categories = request.form.get("categories")
         categories = get_categories(categories)
-        image.save(file_path)
+       
         new_pro = Product(name=name, price=price, filename=filename, description=description, categories_id=categories)
         db.session.add(new_pro)
         db.session.commit()
         flash(f"A new product has been added sucessfully", 'success')
         return redirect(url_for("product.add_product"))
-    return render_template("store/addproduct.html " ,cat=cat)
+    return render_template("product/addproduct.html " ,cat=cat)
 
 
 @product.route("/media/<path:filename>")
@@ -116,32 +119,12 @@ def media(filename):
         current_app.config["UPLOAD_FOLDER"], filename, as_attachment=True
     )
 
-
-def save_image():
-    image = request.files["image"]
-    filename = str(uuid.uuid1()) + os.path.splitext(image.filename)[1]
-    file_path = os.path.join(
-        current_app.config["UPLOAD_FOLDER"], secure_filename(filename)
-    )
-    image.save(file_path)
-
-
 @product.route("/editproduct<int:id>", methods=["GET", "POST"])
 def edit_product(id):
     cat = Categories.query.all()
     rows = Product.query.filter_by(id=id).first()
-    print(rows.filename)
     if request.method == "POST":
-        image = request.files["image"]
-        print(image)
-        print(image.filename)
-        filename = str(uuid.uuid1()) + os.path.splitext(image.filename)[1]
-        print(filename)
-        file_path = os.path.join(
-            current_app.config["UPLOAD_FOLDER"], secure_filename(filename)
-        )
-        image.save(file_path)
-        print(file_path)
+      
         name = request.form.get("name")
         price = request.form.get("price")
         description = request.form.get("description")
@@ -150,14 +133,13 @@ def edit_product(id):
 
         rows.name = name
         rows.price = price
-        rows.filename = filename
         rows.description=description
         rows.categories_id= categories
         
         db.session.commit()
         flash(f"Product {rows.id} has been edited")
         return redirect(url_for("product.edit_product", id=id))
-    return render_template("store/editproduct.html", rows=rows, cat=cat)
+    return render_template("product/editproduct.html", rows=rows, cat=cat)
 
 
 @product.route("/delete/<int:id>")
