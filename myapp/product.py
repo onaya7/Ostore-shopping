@@ -17,7 +17,7 @@ from flask import (
     jsonify,
 )
 from werkzeug.utils import secure_filename
-from myapp.models import Product, Cart, User, db
+from myapp.models import db, Product, Cart, User, Categories
 from myapp.user import getLoginDetails
 
 
@@ -29,17 +29,67 @@ def products():
     rows = Product.query.all()
     return render_template("store/products.html", rows=rows)
 
-
-
 @product.route("/product<int:id>")
 def singleproduct(id):
     rows = Product.query.filter_by(id=id).first()
 
     return render_template("store/productdetails.html", rows=rows)
 
+@product.route("/category/<int:id>")
+def single_category(id):
+    rows =Categories.query.filter_by(id=id).first()
+
+    return render_template("store/single_category.html", rows=rows)
+
+# query product  by category route
+@product.route("/category/men")
+def men():
+    men=Categories.query.filter_by(name='men').first()
+    men = men.product
+    # for product in men:
+    #     print(product.name)
+    return render_template("store/men.html", men=men)
+
+@product.route("/category/women")
+def women():
+
+    return render_template("store/women.html")
+
+@product.route("/category/kids")
+def kids():
+
+    return render_template("store/kids.html")
+
+@product.route("/category/sneakers")
+def sneakers():
+
+    return render_template("store/sneakers.html")
+
+@product.route("/category/heels")
+def heels():
+
+    return render_template("store/heels.html")
+# query product  by category route ends......
+# ----------------------------
+
+def get_categories(name):
+    categories=Categories.query.filter_by(name=name).first()
+    category_id =categories.id
+    return category_id
+
+def save_image():
+        image = request.files["image"]
+        filename = str(uuid.uuid1()) + os.path.splitext(image.filename)[1]
+        file_path = os.path.join(
+            current_app.config["UPLOAD_FOLDER"], secure_filename(filename)
+        )
+        save = image.save(file_path)
+        return save
+
 
 @product.route("/addproduct", methods=["GET", "POST"])
 def add_product():
+    cat = Categories.query.all()
     if request.method == "POST":
         image = request.files["image"]
         filename = str(uuid.uuid1()) + os.path.splitext(image.filename)[1]
@@ -48,13 +98,16 @@ def add_product():
         )
         name = request.form.get("name")
         price = request.form.get("price")
+        description = request.form.get("description")
+        categories = request.form.get("categories")
+        categories = get_categories(categories)
         image.save(file_path)
-        new_pro = Product(name=name, price=price, filename=filename)
-
+        new_pro = Product(name=name, price=price, filename=filename, description=description, categories_id=categories)
         db.session.add(new_pro)
         db.session.commit()
-        flash(f"A new product has been added sucessfully")
-    return render_template("store/addproduct.html")
+        flash(f"A new product has been added sucessfully", 'success')
+        return redirect(url_for("product.add_product"))
+    return render_template("store/addproduct.html " ,cat=cat)
 
 
 @product.route("/media/<path:filename>")
@@ -75,25 +128,36 @@ def save_image():
 
 @product.route("/editproduct<int:id>", methods=["GET", "POST"])
 def edit_product(id):
-
+    cat = Categories.query.all()
     rows = Product.query.filter_by(id=id).first()
+    print(rows.filename)
     if request.method == "POST":
         image = request.files["image"]
+        print(image)
+        print(image.filename)
         filename = str(uuid.uuid1()) + os.path.splitext(image.filename)[1]
+        print(filename)
         file_path = os.path.join(
             current_app.config["UPLOAD_FOLDER"], secure_filename(filename)
         )
         image.save(file_path)
-
+        print(file_path)
         name = request.form.get("name")
         price = request.form.get("price")
-        rows.filename = filename
+        description = request.form.get("description")
+        categories = request.form.get("categories")
+        categories = get_categories(categories)
+
         rows.name = name
         rows.price = price
+        rows.filename = filename
+        rows.description=description
+        rows.categories_id= categories
+        
         db.session.commit()
         flash(f"Product {rows.id} has been edited")
         return redirect(url_for("product.edit_product", id=id))
-    return render_template("store/editproduct.html", rows=rows)
+    return render_template("store/editproduct.html", rows=rows, cat=cat)
 
 
 @product.route("/delete/<int:id>")

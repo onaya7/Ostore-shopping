@@ -1,24 +1,39 @@
 {% extends 'store/base.html' %}
 
 
-
-
-
 {% block content %}
 
 <section class="add-product">
-
-  <!-- mens category -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <div class="success-feedback">
+              {% for message in messages %}
+              <span>{{message}}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          {% endwith %}
+  <!-- addproduct category -->
     <div class="add-product-bx">
-            <form action="#">
+            <form method="POST" action="{{ url_for('product.add_product', filename='') }}" enctype="multipart/form-data">
 
               <div class="add-product-text">
-                <h2>Men's Categories</h2>
+                <h2>Add product</h2>
             </div>
               <div class="add-product-input">
                     <label for="name">Product name</label>
                    <input type="text" name="name">
               </div>
+
+              <div class="add-product-input">
+                  <label for="categories">Category</label>
+                 <select name="categories">
+                        {% for categories in cat  %}
+                        <option >{{categories.name}}</option>
+                        {% endfor %}
+                      
+                 </select>
+            </div>
 
              <div class="add-product-input">
                    <label for="price">Price</label>
@@ -42,187 +57,8 @@
             </form>
     </div>
 
-    <!-- mens category end -->
+    <!-- addproduct end -->
 
-     <!-- women category -->
-     <div class="add-product-bx">
-      <form action="#">
-
-        <div class="add-product-text">
-          <h2>Women's Categories</h2>
-      </div>
-        <div class="add-product-input">
-              <label for="name">Product name</label>
-             <input type="text" name="name">
-        </div>
-
-       <div class="add-product-input">
-             <label for="price">Price</label>
-            <input type="text" name="price">
-       </div>
-
-      <div class="add-product-input">
-            <label for="description">Description</label>
-            <textarea name="description" id=""></textarea>
-      </div>
-
-      <div class="add-product-input">
-            <label for="image">Product Image</label>
-            <input type="file" name="image" id="" accept="image/">
-      </div>
-
-      <div class="add-product-btn">
-        <input type="submit" value="add product">
-      </div>
- 
-      </form>
-</div>
-
-<!-- Women category end -->
-
- <!-- kids category -->
- <div class="add-product-bx">
-  <form action="#">
-
-    <div class="add-product-text">
-      <h2>Kid's Categories</h2>
-  </div>
-    <div class="add-product-input">
-          <label for="name">Product name</label>
-         <input type="text" name="name">
-    </div>
-
-   <div class="add-product-input">
-         <label for="price">Price</label>
-        <input type="text" name="price">
-   </div>
-
-  <div class="add-product-input">
-        <label for="description">Description</label>
-        <textarea name="description" id=""></textarea>
-  </div>
-
-  <div class="add-product-input">
-        <label for="image">Product Image</label>
-        <input type="file" name="image" id="" accept="image/">
-  </div>
-
-  <div class="add-product-btn">
-    <input type="submit" value="add product">
-  </div>
-
-  </form>
-</div>
-
-<!-- kids category end -->
-
- <!-- sneaker category -->
- <div class="add-product-bx">
-  <form action="#">
-
-    <div class="add-product-text">
-      <h2>Sneaker's Categories</h2>
-  </div>
-    <div class="add-product-input">
-          <label for="name">Product name</label>
-         <input type="text" name="name">
-    </div>
-
-   <div class="add-product-input">
-         <label for="price">Price</label>
-        <input type="text" name="price">
-   </div>
-
-  <div class="add-product-input">
-        <label for="description">Description</label>
-        <textarea name="description" id=""></textarea>
-  </div>
-
-  <div class="add-product-input">
-        <label for="image">Product Image</label>
-        <input type="file" name="image" id="" accept="image/">
-  </div>
-
-  <div class="add-product-btn">
-    <input type="submit" value="add product">
-  </div>
-
-  </form>
-</div>
-
-<!-- sneaker category end -->
-
- <!-- heels category -->
- <div class="add-product-bx">
-  <form action="#">
-
-    <div class="add-product-text">
-      <h2>Heel's Categories</h2>
-  </div>
-    <div class="add-product-input">
-          <label for="name">Product name</label>
-         <input type="text" name="name">
-    </div>
-
-   <div class="add-product-input">
-         <label for="price">Price</label>
-        <input type="text" name="price">
-   </div>
-
-  <div class="add-product-input">
-        <label for="description">Description</label>
-        <textarea name="description" id=""></textarea>
-  </div>
-
-  <div class="add-product-input">
-        <label for="image">Product Image</label>
-        <input type="file" name="image" id="" accept="image/">
-  </div>
-
-  <div class="add-product-btn">
-    <input type="submit" value="add product">
-  </div>
-
-  </form>
-</div>
-
-<!-- Heel's category end -->
-
- <!-- watches category -->
- <div class="add-product-bx">
-  <form action="#">
-
-    <div class="add-product-text">
-      <h2>Watches Categories</h2>
-  </div>
-    <div class="add-product-input">
-          <label for="name">Product name</label>
-         <input type="text" name="name">
-    </div>
-
-   <div class="add-product-input">
-         <label for="price">Price</label>
-        <input type="text" name="price">
-   </div>
-
-  <div class="add-product-input">
-        <label for="description">Description</label>
-        <textarea name="description" id=""></textarea>
-  </div>
-
-  <div class="add-product-input">
-        <label for="image">Product Image</label>
-        <input type="file" name="image" id="" accept="image/">
-  </div>
-
-  <div class="add-product-btn">
-    <input type="submit" value="add product">
-  </div>
-
-  </form>
-</div>
-
-<!-- watches category end -->
 
 
     

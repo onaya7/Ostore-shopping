@@ -1,4 +1,4 @@
-from re import T
+from enum import unique
 from flask import flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -66,6 +66,14 @@ class Cart(db.Model):
     def __repr__(self):
         return f"Cart('id:{self.id}','user_id:{self.user_id}')"
 
+class Categories(db.Model):
+    __tablename__="categories"
+    id =db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    product = db.relationship('Product', backref='categories')
+
+    def __repr__(self):
+        return f"Categories('id:{self.id}')"
 
 class Product(db.Model):
 
@@ -78,10 +86,18 @@ class Product(db.Model):
         db.String(89),
         nullable=True,
     )
+    description = db.Column(db.String(400), nullable= True)
     carts = db.relationship("LineItem", back_populates="product")
+    categories_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    
 
     def __repr__(self):
         return f"Product('id:{self.id}')"
+
+
+
+
+
 
 
 class CustomerInfo:

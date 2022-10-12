@@ -1,44 +1,73 @@
 {% extends 'store/base.html' %}
+
+
 {% block content %}
- <div class="center">
-    <div class="child">
-  
-      <form class="card-body" action="{{ url_for('product.edit_product', id=rows.id) }}" method="POST" enctype="multipart/form-data">
-         <h5 class="card-title">Edit Item {{rows.id}}</h5>
-         {% with messages = get_flashed_messages() %}
+
+<section class="add-product">
+           
+  <!-- editproduct category -->
+    <div class="add-product-bx">
+            <form method="POST" action="{{ url_for('product.edit_product', id=rows.id) }}" enctype="multipart/form-data">
+              <div class="add-product-text">
+                <h2>Edit product</h2>
+            </div>
+            {% with messages = get_flashed_messages() %}
             {% if messages %}
-                        
-            {% for message in messages %}
-                        <div class="alert alert-success alert-dismissable" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                                <span aria-hidden="true">x</span>
-                            </button>
-            {{message}}
-                        </div>
-          {% endfor %}
-            
-          {% endif %}
+              <div class="success-feedback">
+              {% for message in messages %}
+              <span>{{message}}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
           {% endwith %}
-   
-        <div class="form-group">
-          <label for="category">Name</label>
-          <input type="text" class="form-control" name="name" value="{{ rows.name }}" required>
-        </div>
+
+              <div class="add-product-input">
+                    <label for="name">Product name</label>
+                   <input type="text" name="name" value="{{rows.name}}">
+              </div>
+
+              <div class="add-product-input">
+                  <label for="categories">Category</label>
+                 <select name="categories">
+                        {% for categories in cat  %}
+                        <option >{{categories.name}}</option>
+                        {% endfor %}
+                 </select>
+            </div>
+
+             <div class="add-product-input">
+                   <label for="price">Price</label>
+                  <input type="text" name="price" value="{{rows.price}}">
+             </div>
+
+            <div class="add-product-input">
+                  <label for="description">Description</label>
+                  <textarea name="description" id="" value="{{rows.description}}"></textarea>
+            </div>
+
+            <div class="add-product-input">
+                  <label for="image">Product Image</label>
+                  <input type="file" name="image" id="" accept="image/" value="{{rows.filename}}">
+            </div>
+
+            <div class="add-product-btn">
+              <input type="submit" value="submit">
+            </div>
        
-        <div class="form-group">
-            <label for="price">Price</label>
-            <input type="number" class="form-control" name="price" value="{{rows.price}}" required>
-         
-        </div>
-  
-        <div class="form-group">
-            <label for="exampleFormControlFile1">Product Image</label>
-          <input type="file" class="form-control-file" name="image" value="http://localhost:8000/media/{{ rows.filename }}" accept="image/">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+            </form>
     </div>
-  </div>
+
+    <!-- editproduct end -->
+
+
+
+    
+</section>
+
+
+
+
+
 {% endblock  %}
     
 
