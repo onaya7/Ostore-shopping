@@ -16,35 +16,24 @@
 <body>
         <!-- header -->
         <header>
-            <a href="#"  class="logo">Ostore</a>
+            <a href="{{ url_for('user.home') }}"  class="logo">Ostore</a>
 
             <ul class="navlist">
                 <li><a href="{{ url_for('user.home') }}">Home</a></li>
-                <li><a href="{{ url_for('user.about') }}">Products</a>
-                    <ul class="dropdown">
-                        <li><a href="{{ url_for('user.home') }}">Men</a></li>
-                        <li><a href="#">Women</a></li>
-                        <li><a href="#">Kids</a></li>
-                        <li><a href="#">Sneakers</a></li>
-                        <li><a href="#">Heels</a></li>
-                        <li><a href="#">Watches</a></li>
-                    </ul>
-                </li>
+                <li><a href="{{ url_for('product.products') }}">Products</a></li>
+                <li><a href="{{ url_for('product.men') }}">Men</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#contact">Account</a>
-                    <ul class="dropdown">
-                        <li><a href="#"><i class='bx bxs-user-check'></i> Welcome user</a></li>
-                        <li><a href="#"><i class='bx bxs-user' ></i> Edit profile</a></li>
-                        <li><a href="#"><i class='bx bx-log-out-circle' ></i> Log out</a></li>
-                        <li><a href="#"><i class='bx bx-help-circle' ></i> Help & support</a></li>
-                    </ul></li>
-                <li><a href="#contact">Cart</a></li>
+                <li><a href="#contact">Account</a></li>
+                <li><a href="">Welcome User</a></li>
             </ul>
 
-
+            <!-- <li><a href="#"><i class='bx bxs-user-check'></i> Welcome user</a></li>
+            <li><a href="#"><i class='bx bxs-user' ></i> Edit profile</a></li>
+            <li><a href="#"><i class='bx bx-log-out-circle' ></i> Log out</a></li>
+            <li><a href="#"><i class='bx bx-help-circle' ></i> Help & support</a></li> -->
 
             <div class="header-icon">
-                <a href="#"><i class='bx bxs-cart'></i></a>
+                <a href="{{ url_for('user.carts') }}"><i class='bx bxs-cart'></i></a>
                 <div class="bx bx-menu" id="menu-icon"></div>
             </div>
 

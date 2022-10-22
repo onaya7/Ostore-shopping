@@ -12,7 +12,6 @@ from flask import (
     jsonify,
 )
 from flask_mail import Message
-from platformdirs import user_config_path
 from myapp.models import db, User, Cart, Product, LineItem
 from myapp.forms import  RegistrationForm, LoginForm, UpdateAccountForm, EmailForm, PasswordForm
 from myapp.instance import bcrypt , mail
