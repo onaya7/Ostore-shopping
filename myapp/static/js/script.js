@@ -6,10 +6,16 @@ window.addEventListener ("scroll",  function(){
 
 let menu = document.querySelector('#menu-icon');
 let navlist = document.querySelector('.navlist');
+let dropdown = document.querySelector('#dropdown')
+let dropdownList = document.querySelector('.dropdown-list')
 
 menu.onclick = () => {
     menu.classList.toggle('bx-x');
     navlist.classList.toggle('open');
+}
+
+dropdown.onclick = () =>{
+    dropdownList.classList.toggle('open')
 }
 
 window.onscroll = () => {
@@ -25,7 +31,7 @@ const sr = ScrollReveal({
 
 sr.reveal('.home-text', {delay:280, origin:'bottom'}) 
 
-sr.reveal('.featured,  .new, .brand ', {delay:200, origin:'bottom'})
+sr.reveal('.featured, .cta, .new, .brand, .contact', {delay:200, origin:'bottom'})
 
 
 // Quantity wrapper

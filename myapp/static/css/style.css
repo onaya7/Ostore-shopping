@@ -34,7 +34,7 @@ header{
     align-items: center;
     justify-content: space-between;
     background: transparent;
-    padding: 20px 14%;
+    padding: 20px 4%;
     transition: all .35s ease;
 }
 
@@ -46,12 +46,13 @@ header{
 }
 .navlist{
     display: flex;
+    position: relative;
 }
 
 .navlist a{
     color: var(--text-color);
     font-weight: 600;
-    padding: 10px 25px;
+    padding: 10px 20px;
     font-size: var(--normal-font);
     transition: all .36s ease;
 }
@@ -59,6 +60,25 @@ header{
 .navlist a:hover{
     color: var(--main-color);
 }
+
+.dropdown-list{
+    position:absolute;
+    display: none;
+    width: 200px;
+    background-color: var(--bg-color);
+    border-radius: 0.5rem;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 10%);
+   
+}
+
+.dropdown-list a{
+    display:block;
+}
+
+.dropdown-list.open{
+    display: block;
+}
+
 
 
 .header-icon i{
@@ -135,7 +155,7 @@ section{
 
 header.sticky{
     background: var(--bg-color);
-    padding: 14px 14%;
+    padding: 20px 4%;
     box-shadow: 0px 0px 10px rgb(0 0 0 / 10%);
 }
 
@@ -1156,7 +1176,7 @@ table{
     }
 
     header.sticky{
-        padding: 14px 4%;
+        padding: 20px 20px;
         transition:  .2s;
     }
 
@@ -1176,22 +1196,25 @@ table{
     .header-icon{
         display: inline-flex;
     }
+
     .navlist{
         position: absolute;
         top: 100%;
         left: -100%;
-        width: 280px;
-        height: 120vh;
+        width: 300px;
+        height: 100vh;
         background: var(--bg-color);
         display: flex;
         align-items: center;
         flex-direction: column;
-        padding: 150px 30px;
-        transition:  all .45s ease;
+        padding: 50px 10px;
+        transition: all .45s ease;
+        gap: 20px;
     }
+
     .navlist a{
         display: block;
-        margin: 1.2rem 0;
+        margin: 0.7rem 0;
     }
 
     .navlist.open{
@@ -1206,12 +1229,12 @@ table{
 @media (max-width: 400px){
 
     header{
-        padding: 7px 4%;
+        padding: 20px 4%;
         transition:  0.2s;
     }
 
     header.sticky{
-        padding: 14px 4%;
+        padding: 20px 20px;
         transition:  .2s;
     }
 

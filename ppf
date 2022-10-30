@@ -1,0 +1,26 @@
+[33ma0f819f[m[33m ([m[1;36mHEAD -> [m[1;32mupdate[m[33m, [m[1;31morigin/update[m[33m)[m made changes in template folder
+[33m4acf733[m worked on product view
+[33m29cda84[m added new functionality
+[33mb774a41[m modified css
+[33m01e7555[m first update change
+[33m70582c4[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m Removed charge.py and made changes to readme.md
+[33mc131027[m Removed charge.py and made changes to readme.md
+[33m3cf16a3[m added new product
+[33m1d92527[m modified base.html
+[33m54f8587[m made changes on the admin
+[33m3a5dcc8[m implemented paystack checkout webhook
+[33m3f356db[m changes made in product.py
+[33me1c7524[m Restructured app
+[33ma85d567[m webhook:worked on api create_product
+[33mf7594c5[m Created a stripe-webhook
+[33m07193f7[m new commit
+[33m6b5b75d[m changes made to the config file
+[33mf1a8488[m Delete requirements.txt
+[33mcb60eda[m Update README.md
+[33m7ffd33f[m initial commit
+[33mbfb6c5b[m initial commit
+[33m15d5bbf[m initial commit
+[33m50da144[m Update README.md
+[33m156b1c2[m Merge branch 'master' of https://github.com/onaya7/Ostore-shopping
+[33ma463e76[m initial commit
+[33mab8b583[m Initial commit

@@ -16,21 +16,43 @@
 <body>
         <!-- header -->
         <header>
-            <a href="{{ url_for('user.home') }}"  class="logo">Ostore</a>
+            <a href="#"  class="logo">Ostore</a>
 
             <ul class="navlist">
                 <li><a href="{{ url_for('user.home') }}">Home</a></li>
-                <li><a href="{{ url_for('product.products') }}">Products</a></li>
-                <li><a href="{{ url_for('product.men') }}">Men</a></li>
+                <li><a href="">Product</a>
+                    <!-- <div class="dropdown-list">
+                        <a href="#"><i class='bx bxs-user-check'></i>Men</a>
+                        <a href="#"><i class='bx bxs-user'></i> Women</a>
+                        <a href="#"><i class='bx bx-log-out-circle'></i>Kids</a>
+                        <a href="#"><i class='bx bx-help-circle' ></i>Sneakers</a>
+                        <a href="#"><i class='bx bx-help-circle' ></i>Heels</a>
+                        <a href="#"><i class='bx bx-help-circle' ></i>Watches</a>
+                    </div> -->
+            </li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#contact">Account</a></li>
-                <li><a href="">Welcome User</a></li>
+                <li><a href="#contact">Blog</a></li>
+
+                <li><a href="#" id="dropdown" class="dropdown">Account</a>
+              
+                        <div  class="dropdown-list">
+                            {% if current_user.is_authenticated %}
+                            <a href="#"><i class='bx bxs-user-check'></i> Welcome {{ current_user.firstname}}</a>
+                            <a href="#"><i class='bx bxs-user'></i> Edit profile</a>
+                            <a href="{{ url_for('user.logout')}}"><i class='bx bx-log-out-circle'></i> Log out</a>
+                            <a href="#"><i class='bx bx-help-circle' ></i> Help & support</a>
+                            {% endif %}
+
+                            {% if not current_user.is_authenticated %}
+                            <a href="#"><i class='bx bxs-user-circle'></i> Welcome Guest</a>
+                            <a href="{{ url_for('user.login') }}"><i class='bx bx-log-out-circle'></i> Sign-in</a>
+                            {% endif %}
+
+                        </div>
+                </li>
             </ul>
 
-            <!-- <li><a href="#"><i class='bx bxs-user-check'></i> Welcome user</a></li>
-            <li><a href="#"><i class='bx bxs-user' ></i> Edit profile</a></li>
-            <li><a href="#"><i class='bx bx-log-out-circle' ></i> Log out</a></li>
-            <li><a href="#"><i class='bx bx-help-circle' ></i> Help & support</a></li> -->
+       
 
             <div class="header-icon">
                 <a href="{{ url_for('user.carts') }}"><i class='bx bxs-cart'></i></a>
