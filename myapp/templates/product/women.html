@@ -3,6 +3,15 @@
 {% block content %}
     <!-- women -->
     <section class="featured-men" id="featured-men">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="success-feedback">
+          {% for message in messages %}
+          <span>{{message}}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      {% endwith %}
         <div class="center-text">
             <h2>Women Categories</h2>
         </div>

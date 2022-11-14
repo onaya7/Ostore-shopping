@@ -16,14 +16,14 @@
 <body>
         <!-- header -->
         <header>
-            <a href="#"  class="logo">Ostore</a>
+            
+            <a href="{{ url_for('user.home') }}"  class="logo"><span class="logo"><img src="{{ url_for('static', filename='img/1bg1.png') }}" alt=""></span></a>
 
             <ul class="navlist">
                 <li><a href="{{ url_for('user.home') }}">Home</a></li>
                 <li><a href="{{ url_for('product.products') }}">Product</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="#contact">Blog</a></li>
-
                 <li><a href="#" id="dropdown" class="dropdown">Account</a>
               
                         <div  class="dropdown-list">

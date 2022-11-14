@@ -39,10 +39,12 @@ header{
 }
 
 .logo{
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--text-color);
+    width: 140px;
+}
+
+.logo img{
+    width: 100%;
+    height: auto;
 }
 .navlist{
     display: flex;
@@ -348,6 +350,10 @@ footer{
     font-weight: 600;
     color: #555;
 }
+.main-contact span{
+    height: 50px;
+    width: 50px;
+}
 
 .icons{
     display: flex;
@@ -441,20 +447,21 @@ align-items: center;
 
 
 
-.signin-text h2{
+.signin-text h2, .signin-text p{
     font-style: normal;
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     line-height: 29px;
-    color: var(--text-color);
+    color: var(--bg-color);
     text-transform: capitalize;
-    
 }
 
-.signin-text p{
-    color: #ffffff;
-    font-size:0.6rem;
+.signin-text img{
+    height: 50px;
+    width: 100px;
 }
+
+
 
 .signin-text h2 span{
     color: #111111;
@@ -795,12 +802,6 @@ table{
 
 
 
-.cart-content tr:last-child{
-    text-align: center;
-    
-    
-}
-
 .cart-content th{
     text-align: left;
 }
@@ -1059,14 +1060,6 @@ table{
 }
 table{
     width: 100%;
-}
-
-
-
-.cart-content tr:last-child{
-    text-align: center;
-    
-    
 }
 
 .cart-content th{

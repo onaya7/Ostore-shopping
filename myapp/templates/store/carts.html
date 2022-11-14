@@ -4,6 +4,15 @@
 	
 	  <!-- cart view -->
 	  <section class="cart" id="">
+		{% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="success-feedback">
+          {% for message in messages %}
+          <span>{{message}}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      {% endwith %}
 		<div class="caption"> Shopping Cart</div>
 		{% if not cart %}
 	
@@ -14,11 +23,10 @@
 
 		{% else %}
 
-			{% for item in cart %}
+			
 			<div class="cart-container">
 				<div class="cart-content">
 					<table>
-						
 						<tr>
 							<th></th>
 							<th></th>
@@ -27,23 +35,19 @@
 							<th>Quantity</th>
 						</tr>
 
+						{% for item in cart %}
 						<tr>
-							<td><a href="#"><i class='bx bx-x' ></i></a></td>
+							<td><a href="{{ url_for('user.removeFromCart', product_id=item.id) }}"><i class='bx bx-x' ></i></a></td>
 							<td><div id="t-img"><img src="{{ url_for('product.media', filename=item.filename) }}" alt=""></div></td>
 							<td>{{item.name}}</td>
 							<td>${{item.price}}</td>
 							<td>{{item.quantity}}</td>
 						</tr>
-
-						<tr>
-							<td colspan="6"><a href="#" id="update-cartbtn">Update cart</a>
-							</td>
-						</tr>
-
+						{% endfor %}						
 					</table>
 					
 				</div>
-				{% endfor %}
+			
 
 					<div class="checkout">
 						<h3>Cart total</h3>
