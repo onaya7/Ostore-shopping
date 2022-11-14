@@ -20,16 +20,7 @@
 
             <ul class="navlist">
                 <li><a href="{{ url_for('user.home') }}">Home</a></li>
-                <li><a href="">Product</a>
-                    <!-- <div class="dropdown-list">
-                        <a href="#"><i class='bx bxs-user-check'></i>Men</a>
-                        <a href="#"><i class='bx bxs-user'></i> Women</a>
-                        <a href="#"><i class='bx bx-log-out-circle'></i>Kids</a>
-                        <a href="#"><i class='bx bx-help-circle' ></i>Sneakers</a>
-                        <a href="#"><i class='bx bx-help-circle' ></i>Heels</a>
-                        <a href="#"><i class='bx bx-help-circle' ></i>Watches</a>
-                    </div> -->
-            </li>
+                <li><a href="{{ url_for('product.products') }}">Product</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="#contact">Blog</a></li>
 
@@ -116,5 +107,7 @@
          <!-- custom js link -->
          <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/4.0.9/scrollreveal.min.js"></script>
          <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+         <script src='https://js.paystack.co/v1/inline.js'></script> 
+       
 </body>
 </html>

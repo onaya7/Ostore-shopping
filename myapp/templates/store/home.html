@@ -2,186 +2,186 @@
 
 
 {% block content %}
-          {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                  <div class="success-feedback">
-                  {% for message in messages %}
-                   <span>{{message}}</span>
-                  {% endfor %}
-                </div>
-                {% endif %}
-              {% endwith %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="success-feedback">
+    {% for message in messages %}
+    <span>{{message}}</span>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
 
 
-             <!-- home -->
-        <section class="home" id="home">
-            <div class="home-text">
-                <h1>Men's New <br> <span>Arrivals</span></h1>
-                <p>New colors, now also available in men's sizing</p>
-                <a href="#" class="btn">View collection</a>
+<!-- home -->
+<section class="home" id="home">
+    <div class="home-text">
+        <h1>Men's New <br> <span>Arrivals</span></h1>
+        <p>New colors, now also available in men's sizing</p>
+        <a href="#" class="btn">View collection</a>
+    </div>
+</section>
+
+
+<!-- featured -->
+<section class="featured" id="featured">
+    <div class="center-text">
+        <h2>Featured Categories</h2>
+    </div>
+    <div class="featured-content">
+        <div class="row">
+            <a href="{{ url_for('product.men') }}"><img src="{{ url_for('static', filename='img/men.jpg') }}" alt="fea1"></a>
+            <div class="fea-text">
+                <h5>Mens</h5>
+                <p>10 items</p>
             </div>
-        </section>
-
-         
-        <!-- featured -->
-        <section class="featured" id="featured">
-            <div class="center-text">
-                <h2>Featured Categories</h2>
+            <div class="arrow">
+                <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
             </div>
-            <div class="featured-content">
-                <div class="row">
-                    <img src="img/fea1.jpg" alt="fea1">
-                    <div class="fea-text">
-                        <h5>Mens</h5>
-                        <p>10 items</p>
-                    </div>
-                    <div class="arrow">
-                        <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
-                    </div>
-                </div>
+        </div>
 
-                <div class="row">
-                    <img src="img/fea2.jpg" alt="fea1">
-                    <div class="fea-text">
-                        <h5>Mens</h5>
-                        <p>10 items</p>
-                    </div>
-                    <div class="arrow">
-                        <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <img src="img/fea3.jpg" alt="fea1">
-                    <div class="fea-text">
-                        <h5>Mens</h5>
-                        <p>10 items</p>
-                    </div>
-                    <div class="arrow">
-                        <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <img src="img/fea4.jpg" alt="fea1">
-                    <div class="fea-text">
-                        <h5>Mens</h5>
-                        <p>10 items</p>
-                    </div>
-                    <div class="arrow">
-                        <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <img src="img/fea5.jpg" alt="fea1">
-                    <div class="fea-text">
-                        <h5>Mens</h5>
-                        <p>10 items</p>
-                    </div>
-                    <div class="arrow">
-                        <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <img src="img/fea6.jpg" alt="fea">
-                    <div class="fea-text">
-                        <h5>Mens</h5>
-                        <p>10 items</p>
-                    </div>
-                    <div class="arrow">
-                        <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
-                    </div>
-                </div>
+        <div class="row">
+            <a href="{{ url_for('product.women') }}"><img src="{{ url_for('static', filename='img/women.jpg') }}" alt="fea2"></a>
+            <div class="fea-text">
+                <h5>Women</h5>
+                <p>10 items</p>
             </div>
-        </section>
-
-        <!-- cta -->
-        <section class="cta" id="cta">
-            <div class="cta-text">
-                <h6>SUMMER ON SALE</h6>
-                <h4>20% OFF <br> NEW ARRIVAL</h4>
-                <a href="#" class="btn">Shop Now</a>
+            <div class="arrow">
+                <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
             </div>
-        </section>
+        </div>
 
-
-        <!-- new arrivals -->
-        <section class="new" id="new">
-            <div class="center-text">
-                <h2>New Arrivals</h2>
+        <div class="row">
+            <a href="{{ url_for('product.kids') }}"><img src="{{ url_for('static', filename='img/kids.jpg') }}" alt="fea3"></a>
+            <div class="fea-text">
+                <h5>Kids</h5>
+                <p>10 items</p>
             </div>
-
-            <div class="new-content">
-
-                <div class="box">
-                    <img src="img/tren1.jpg">
-                    <h5>Lorem Ipsum dizgi</h5>
-                    <h6>$188</h6>
-                    <div class="sale">
-                        <h4>Sale</h4>
-                    </div>
-                </div>
-
-                <div class="box">
-                    <img src="img/tren2.jpg">
-                    <h5>Lorem Ipsum dizgi</h5>
-                    <h6>$188</h6>
-                    <div class="sale">
-                        <h4>Sale</h4>
-                    </div>
-                </div>
-
-                <div class="box">
-                    <img src="img/tren3.jpg">
-                    <h5>Lorem Ipsum dizgi</h5>
-                    <h6>$188</h6>
-                    <div class="sale">
-                        <h4>Sale</h4>
-                    </div>
-                </div>
-
-                <div class="box">
-                    <img src="img/tren4.jpg">
-                    <h5>Lorem Ipsum dizgi</h5>
-                    <h6>$188</h6>
-                    <div class="sale">
-                        <h4>Sale</h4>
-                    </div>
-                </div>
-
+            <div class="arrow">
+                <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
             </div>
-        </section>
+        </div>
 
-        <!-- brand -->
-        <section class="brand">
-            <div class="brand-content">
-                <div class="main">
-                    <img src="{{ url_for('static', filename='img/brand1.png') }}" alt="brand1">
-                </div>
-
-                <div class="main">
-                     <img src="{{ url_for('static', filename='img/brand2.png') }}" alt="brand2">
-                </div>
-
-                <div class="main">
-                     <img src="{{ url_for('static', filename='img/brand3.png') }}" alt="brand3">
-                </div>
-
-                <div class="main">
-                     <img src="{{ url_for('static', filename='img/brand4.png') }}" alt="brand4">
-                </div>
-
-                <div class="main">
-                     <img src="{{ url_for('static', filename='img/brand5.png') }}" alt="brand5">
-                </div>
-
-                <div class="main">
-                     <img src="{{ url_for('static', filename='img/brand6.png') }}" alt="brand6">
-                </div>
+        <div class="row">
+            <img src="{{ url_for('static', filename='img/sneakers.png') }}" alt="fea1">
+            <div class="fea-text">
+                <h5>Sneakers</h5>
+                <p>10 items</p>
             </div>
-        
-        </section>
-{% endblock  %}
-    <!-- ***** Footer Start ***** -->
+            <div class="arrow">
+                <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <img src="{{ url_for('static', filename='img/heels.jpg') }}" alt="fea1">
+            <div class="fea-text">
+                <h5>Heels</h5>
+                <p>10 items</p>
+            </div>
+            <div class="arrow">
+                <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <img src="{{ url_for('static', filename='img/watches.jpg') }}" alt="fea">
+            <div class="fea-text">
+                <h5>Watches</h5>
+                <p>10 items</p>
+            </div>
+            <div class="arrow">
+                <a href="#"><i class="bx bx-right-arrow-alt"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- cta -->
+<section class="cta" id="cta">
+    <div class="cta-text">
+        <h6>SUMMER ON SALE</h6>
+        <h4>20% OFF <br> NEW ARRIVAL</h4>
+        <a href="#" class="btn">Shop Now</a>
+    </div>
+</section>
+
+
+<!-- new arrivals -->
+<section class="new" id="new">
+    <div class="center-text">
+        <h2>New Arrivals</h2>
+    </div>
+
+    <div class="new-content">
+
+        <div class="box">
+            <img src="{{ url_for('static', filename='img/tren1.jpg') }}">
+            <h5>Lorem Ipsum dizgi</h5>
+            <h6>$188</h6>
+            <div class="sale">
+                <h4>Sale</h4>
+            </div>
+        </div>
+
+        <div class="box">
+            <img src="{{ url_for('static', filename='img/tren2.jpg') }}">
+            <h5>Lorem Ipsum dizgi</h5>
+            <h6>$188</h6>
+            <div class="sale">
+                <h4>Sale</h4>
+            </div>
+        </div>
+
+        <div class="box">
+            <img src="{{ url_for('static', filename='img/tren3.jpg') }}">
+            <h5>Lorem Ipsum dizgi</h5>
+            <h6>$188</h6>
+            <div class="sale">
+                <h4>Sale</h4>
+            </div>
+        </div>
+
+        <div class="box">
+            <img src="{{ url_for('static', filename='img/tren4.jpg') }}">
+            <h5>Lorem Ipsum dizgi</h5>
+            <h6>$188</h6>
+            <div class="sale">
+                <h4>Sale</h4>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- brand -->
+<section class="brand">
+    <div class="brand-content">
+        <div class="main">
+            <img src="{{ url_for('static', filename='img/brand1.png') }}" alt="brand1">
+        </div>
+
+        <div class="main">
+            <img src="{{ url_for('static', filename='img/brand2.png') }}" alt="brand2">
+        </div>
+
+        <div class="main">
+            <img src="{{ url_for('static', filename='img/brand3.png') }}" alt="brand3">
+        </div>
+
+        <div class="main">
+            <img src="{{ url_for('static', filename='img/brand4.png') }}" alt="brand4">
+        </div>
+
+        <div class="main">
+            <img src="{{ url_for('static', filename='img/brand5.png') }}" alt="brand5">
+        </div>
+
+        <div class="main">
+            <img src="{{ url_for('static', filename='img/brand6.png') }}" alt="brand6">
+        </div>
+    </div>
+
+</section>
+{% endblock %}
+<!-- ***** Footer Start ***** -->

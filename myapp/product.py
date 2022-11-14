@@ -37,6 +37,7 @@ def singleproduct(id):
 @product.route("/category/<int:id>")
 def single_category(id):
     rows =Categories.query.filter_by(id=id).first()
+    rows = rows.product
     return render_template("product/single_category.html", rows=rows)
 
 # query product  by category route
@@ -161,8 +162,8 @@ def checkout():
     return render_template("store/paystack.html", paystack_pk=paystack_pk)
 
 
-@product.route("/verify_paystack", methods=["POST", "GET"])
-def paystack_callback():
+@product.route("/verify_paystack/<int:reference>", methods=["POST", "GET"])
+def paystack_callback(reference):
     reference = requests.get("reference")
     print(reference)
     url = f"http://api.paystack.co/transaction/verify/{reference}"

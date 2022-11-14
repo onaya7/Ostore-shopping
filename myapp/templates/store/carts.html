@@ -25,36 +25,14 @@
 							<th>Product</th>
 							<th>Price</th>
 							<th>Quantity</th>
-							<th>Subtotal</th>
 						</tr>
 
 						<tr>
 							<td><a href="#"><i class='bx bx-x' ></i></a></td>
-							<td><div id="t-img"><img src="img/tren2.jpg" alt=""></div></td>
-							<td>Bags</td>
-							<td>$300</td>
-							<td>2</td>
-							<td>$600</td>
-						</tr>
-
-						
-						<tr>
-							<td><a href="#"><i class='bx bx-x' ></i></a></td>
-							<td><div id="t-img"><img src="img/tren2.jpg" alt=""></div></td>
-							<td>Bags</td>
-							<td>$300</td>
-							<td>2</td>
-							<td>$600</td>
-						</tr>
-
-						
-						<tr>
-							<td><a href="#"><i class='bx bx-x' ></i></a></td>
-							<td><div id="t-img"><img src="img/tren2.jpg" alt=""></div></td>
-							<td>Bags</td>
-							<td>$300</td>
-							<td>2</td>
-							<td>$600</td>
+							<td><div id="t-img"><img src="{{ url_for('product.media', filename=item.filename) }}" alt=""></div></td>
+							<td>{{item.name}}</td>
+							<td>${{item.price}}</td>
+							<td>{{item.quantity}}</td>
 						</tr>
 
 						<tr>
@@ -65,34 +43,63 @@
 					</table>
 					
 				</div>
-
-					
+				{% endfor %}
 
 					<div class="checkout">
 						<h3>Cart total</h3>
 								<div class="checkout-content">
 									<div class="subtotal">
 										<p>SUBTOTAL</p>
-										<span>$299</span>
+										<span>${{subtotal}}</span>
 									</div>
 
 									<div class="total">
 										<p>TOTAL</p>
-										<span>$400</span>
+										<span>${{subtotal}}</span>
 									</div>
 								</div>  
 
 						
-								<a href="#" class="checkout-btn"> Proceed to checkout</a>
+							
+									<button type="button" class="checkout-btn" onclick="payWithPaystack()"> Proceed to checkout</button>
 							
 					</div>
 
 
 			</div>
-			{% endfor %}
+			
 		{% endif %}
 		
 	</section>
 
+		{% block scripts %}
+		<script>
+			function payWithPaystack(){
+				var handler = PaystackPop.setup({
+					key: "{{ paystack_pk }}",
+					email: "{{ email }}",
+					amount: "{{ subtotal }}" * 100,
+					ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+					metadata: {
+						custom_fields: [
+							{
+								display_name: "{{name}}",
+								variable_name: "{{ email }}",
+								mobile_number:  "",
+								value: "+2348012345678"
+							}
+						]
+					},
+					callback: function(response){
+						// alert('success. transaction ref is ' + response.reference);
+					},
+					onClose: function(){
+						alert('window closed');
+					}
+				});
+				handler.openIframe();
+			}
+		</script>
+	{% endblock %}
+{% endblock %}
 
-{% endblock content %}
