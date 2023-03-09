@@ -32,13 +32,8 @@ def products():
 @product.route("/product<int:id>")
 def singleproduct(id):
     rows = Product.query.filter_by(id=id).first()
-    return render_template("product/single_product.html", rows=rows)
-
-@product.route("/category/<int:id>")
-def single_category(id):
-    rows =Categories.query.filter_by(id=id).first()
-    rows = rows.product
-    return render_template("product/single_category.html", rows=rows)
+    
+    return render_template("product/single_product.html", row=rows)
 
 # query product  by category route
 @product.route("/category/men")

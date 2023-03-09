@@ -95,11 +95,6 @@ class Product(db.Model):
         return f"Product('id:{self.id}')"
 
 
-
-
-
-
-
 class CustomerInfo:
     __tablename__ = "CustomerInfo"
     id = db.Column(db.Integer, primary_key=True)

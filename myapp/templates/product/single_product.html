@@ -1,70 +1,77 @@
 {% extends 'store/base.html' %}
 
-{% block content %} <!-- single page view -->
+{% block content %}
+<!-- single page view -->
 <section class="single" id="single">
-   
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="success-feedback">
+    {% for message in messages %}
+    <span>{{message}}</span>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
     <div class="single-container">
+        {% if row %}
         <div class="single-img">
-            <img src="img/fea2.jpg" alt="brand">
+            <img src="{{ url_for('product.media', filename=row.filename) }}" alt="men">
         </div>
 
         <div class="single-text">
-            <h2>Mens T-shirt </h2>
+            <h2>{{row.name}}</h2>
 
-            <p id="price">$155</p>
-            <p id="text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate saepe qui voluptatum officia enim ipsum fugit veniam, quia nemo laudantium reprehenderit. Voluptas id saepe ipsa maiores ea nam voluptatem commodi.
-            Accusamus, libero dolor fugit delectus eaque nisi sapiente itaque cupiditate! Nisi sed at pariatur obcaecati, debitis eos autem illo quia quod ipsum laudantium vero necessitatibus voluptas magnam possimus vel est?</p>
+            <p id="price">{{row.price}}</p>
+            <p id="text">{{row.description}}</p>
 
-         
+
             <p>Availability:<span>In stock</span></p>
             <p>Sku:<span>85674jdhu3</span></p>
 
-            
-            
+
+
             <div class="qty-wrapper">
-                        <div class="qty">
-                            <span class="minus">-</span>
-                            <span class="num">01</span>
-                            <span class="plus">+</span>
-                        </div>
+                <div class="qty">
+                    <span class="minus">-</span>
+                    <span class="num">{{row.quantity}}</span>
+                    <span class="plus">+</span>
+                </div>
 
-                        <a class="p-cart" href="#">Add to cart</a>
+                <a class="p-cart" href="/addToCart/{{row.id}}">Add to cart</a>
             </div>
-            
 
-            
+        </div>
+        {% endif %}
+    </div>
 
+    <h5>We found other products you might like</h5>
+    <div class="line"></div>
+
+    <div class="single-content">
+        <div class="product">
+            <img src="img/fea1.jpg" alt="fea1">
+
+            <div class="p-text">
+                <h5>Mens</h5>
+                <i class='bx bx-heart'></i>
+            </div>
+
+            <div id="p-wrapper">
+                <div class="star">
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star-half'></i>
+                </div>
+
+                <p id='price'>$400</p>
+
+                <a class="p-cart" href="#">Add to cart</a>
+            </div>
         </div>
 
     </div>
-    
-    <h5>We found other products you might like</h5>
-    <div class="line"></div>
-        
-        <div class="single-content">
-            <div class="product">
-                <img src="img/fea1.jpg" alt="fea1">
 
-                <div class="p-text">
-                    <h5>Mens</h5>
-                    <i class='bx bx-heart' ></i>
-                </div>
-
-                <div id="p-wrapper">
-                        <div class="star">
-                            <i class='bx bxs-star'></i>
-                            <i class='bx bxs-star'></i>
-                            <i class='bx bxs-star'></i>
-                            <i class='bx bxs-star-half'></i>
-                        </div>
-    
-                        <p id = 'price'>$400</p>
-
-                        <a class="p-cart" href="#">Add to cart</a>
-                </div>
-            </div>
-
-        </div>
-    
 </section>
 {% endblock content %}
