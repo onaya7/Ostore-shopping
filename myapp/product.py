@@ -4,7 +4,6 @@ import hashlib
 import json
 import requests
 import uuid
-from flask_login import current_user, user_accessed
 from flask import (
     Blueprint,
     render_template,
