@@ -78,9 +78,6 @@ def get_categories(name):
 
 
       
-    
-
-
 @product.route("/addproduct", methods=["GET", "POST"])
 def add_product():
     cat = Categories.query.all()

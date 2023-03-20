@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, redirect, request, url_for, flash
 from flask_login import login_user, current_user , logout_user, login_required
-from werkzeug.security import check_password_hash, generate_password_hash
 from myapp.models import Admin, User ,db
-from myapp.instance import bcrypt , mail
+from myapp.instance import bcrypt
 from myapp.forms import RegistrationForm, LoginForm
 from myapp.models import Admin
 
@@ -72,10 +71,6 @@ def delete_users(user_id):
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for("admin.users", user_id=user_id))
-
-
-
-        
 
 
 #### AUTHENTICATION END ######

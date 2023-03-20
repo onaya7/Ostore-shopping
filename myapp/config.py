@@ -1,10 +1,9 @@
 # Define the application directory
 import os
-from flask import current_app
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
-base_dir = os.path.abspath(os.path.dirname(__file__)) 
+base_dir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
@@ -21,8 +20,8 @@ class Config:
      #Mails
     MAIL_SERVER = os.getenv('MAIL_SERVER')
     MAIL_PORT = os.getenv('MAIL_PORT')  
-#     MAIL_USE_TSL= bool(os.getenv('MAIL_USE_TSL'))
-#     MAIL_USE_SSL= bool(os.getenv('MAIL_USE_SSL'))
+#   MAIL_USE_TSL= bool(os.getenv('MAIL_USE_TSL'))
+#   MAIL_USE_SSL= bool(os.getenv('MAIL_USE_SSL'))
     MAIL_USERNAME=os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD=os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER= os.getenv('MAIL_DEFAULT_SENDER')
