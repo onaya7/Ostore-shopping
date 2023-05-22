@@ -1,74 +1,64 @@
-{% extends "store/base.html" %}
-{% block content %}
-     <!-- Signin page -->
+{% extends "store/base.html" %} {% block content %}
+<!-- Signin page -->
 
-     <section class="auth-container">
-        <div class="auth-box">
-            <div class="signin-text">
-                
-                <img src="{{ url_for('static', filename='img/2bg2.png') }}" alt="">
-                <p>Sign in to your account below.</p>
-            </div>
-            <form method="POST">
-                {{ form.hidden_tag() }}
-                
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                  <div class="success-feedback">
-                  {% for message in messages %}
-                   <span>{{message}}</span>
-                  {% endfor %}
-                </div>
-                {% endif %}
-              {% endwith %}
-
-
-                    <div class="input-bx">
-                        {{ form.email}}
-                        {{ form.email.label(placeholder ="a") }}
-                    </div>
-                    {% if form.email.errors %}
-                           <div class="invalid-feedback">
-                            {% for error in form.email.errors %}
-                            <span>{{ error }}</span>
-                            {% endfor %}
-                           </div>
-                    {% endif %}
-
-                    <div class="input-bx">
-                        {{ form.password}}
-                        {{ form.password.label(placeholder ="a") }}
-                    </div>
-                    {% if form.password.errors %}
-                           <div class="invalid-feedback">
-                            {% for error in form.password.errors %}
-                            <span>{{ error }}</span>
-                            {% endfor %}
-                           </div>
-                    {% endif %}
-
-                    <div class="input-bx-btn">
-                        {{ form.submit }}
-                    </div>
-            </form>
-
-           <div class="signin-bm">
-                <div class="checkbox">
-                    <input type="checkbox"  id="checkbox">
-                    <p>Remember me</p>
-                </div>
-
-                <a href="{{ url_for('user.reset_password') }}">Forgot password</a>
-
-           </div>
-
-           <span>Dont have an account? <a href="{{ url_for('user.register') }}">Create</a></span>
-
+<section class="auth-container">
+    <div class="auth-box">
+        <div class="signin-text">
+            <span>Welcome Back to <i class='bx bxs-wink-smile bx-fade-up' ></i>store</span>
         </div>
-       </section>
-            
+        <form method="POST">
+            {{ form.hidden_tag() }} {% with messages = get_flashed_messages() %} {% if
+            messages %}
+            <div class="success-feedback">
+                {% for message in messages %}
+                <span>{{message}}</span>
+                {% endfor %}
+            </div>
+            {% endif %} {% endwith %}
+            <div class="input-bx">
+                {{ form.email}} {{ form.email.label(placeholder ="a") }}
+            </div>
+            {% if form.email.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
 
+            <div class="input-bx">
+                {{ form.password}} {{ form.password.label(placeholder ="a") }}
+            </div>
+            {% if form.password.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
 
-        <!-- signinpage end -->
-        
+            <div class="input-bx-btn">{{ form.submit }}</div>
+        </form>
+
+        <div class="signin-bm">
+            <div class="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <p>Remember me</p>
+            </div>
+
+            <a href="{{ url_for('user.reset_password') }}">Forgot password</a>
+        </div>
+
+        <div class="auth-footer">
+            Dont have an account? <a href="{{ url_for('user.register') }}">Create</a>
+        </div>
+    </div>
+
+    <div class="auth-img">
+        <img src="{{ url_for('static', filename='img/auth-img.webp') }}" alt="" />
+    </div>
+</section>
+
+<!-- signinpage end -->
+
 {% endblock content %}

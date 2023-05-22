@@ -6,14 +6,9 @@ from myapp.forms import RegistrationForm, LoginForm
 from myapp.models import Admin
 
 
-
-
-
-
 admin=Blueprint('admin', __name__,)
 
 ####   ADMIN AUTHENTICATION   #######
-
 @admin.route("/users")
 def users():
     user = User.query.all()

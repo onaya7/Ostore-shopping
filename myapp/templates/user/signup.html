@@ -1,88 +1,80 @@
-{% extends 'store/base.html' %}
-{% block content %}
-         <!-- SignUp page -->
+{% extends 'store/base.html' %} {% block content %}
+<!-- SignUp page -->
 
-       
-         <section class="auth-container">
-            <div class="auth-box">
-                <div class="signin-text">
-                    <img src="{{ url_for('static', filename='img/2bg2.png') }}" alt="">
-                    <h2>Create your account</h2>
-                </div>
-                <form method="POST" action="">
-                    {{ form.hidden_tag() }}
-                    <div class="input-bx">
-                        {{ form.firstname }}
-                        {{ form.firstname.label(placeholder ="a") }}
-                    </div>
-                    {% if form.firstname.errors %}
-                           <div class="invalid-feedback">
-                            {% for error in form.firstname.errors %}
-                            <span>{{ error }}</span>
-                            {% endfor %}
-                           </div>
-                    {% endif %}
-
-                    <div class="input-bx">
-                        {{ form.lastname}}
-                        {{ form.lastname.label(placeholder ="a") }}
-                    </div>
-                    {% if form.lastname.errors %}
-                           <div class="invalid-feedback">
-                            {% for error in form.lastname.errors %}
-                            <span>{{ error }}</span>
-                            {% endfor %}
-                           </div>
-                    {% endif %}
-
-                    <div class="input-bx">
-                        {{ form.email}}
-                        {{ form.email.label(placeholder ="a") }}
-                    </div>
-                    {% if form.email.errors %}
-                           <div class="invalid-feedback">
-                            {% for error in form.email.errors %}
-                            <span>{{ error }}</span>
-                            {% endfor %}
-                           </div>
-                    {% endif %}
-
-                    <div class="input-bx">
-                        {{ form.password}}
-                        {{ form.password.label(placeholder ="a") }}
-                    </div>
-                    {% if form.password.errors %}
-                           <div class="invalid-feedback">
-                            {% for error in form.password.errors %}
-                            <span>{{ error }}</span>
-                            {% endfor %}
-                           </div>
-                    {% endif %}
-
-                    <div class="input-bx">
-                        {{ form.confirm_password}}
-                        {{ form.confirm_password.label(placeholder ="a") }}
-                    </div>
-                    {% if form.confirm_password.errors %}
-                           <div class="invalid-feedback">
-                            {% for error in form.confirm_password.errors %}
-                            <span>{{ error }}</span>
-                            {% endfor %}
-                           </div>
-                    {% endif %}
-
-                    <div class="input-bx-btn">
-                        {{ form.submit }}
-                    </div>
-                  
-                </form>
-
-              
-
-               <span>Already have an account? <a href="{{ url_for('user.login') }}">SignIn</a></span>
-
+<section class="auth-container">
+    <div class="auth-box">
+        <div class="signin-text">
+            <span>Get started</span>
+        </div>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <div class="input-bx">
+                {{ form.firstname }} {{ form.firstname.label(placeholder ="a") }}
             </div>
-        </section>
+            {% if form.firstname.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.firstname.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
 
+            <div class="input-bx">
+                {{ form.lastname}} {{ form.lastname.label(placeholder ="a") }}
+            </div>
+            {% if form.lastname.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.lastname.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="input-bx">
+                {{ form.email}} {{ form.email.label(placeholder ="a") }}
+            </div>
+            {% if form.email.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="input-bx">
+                {{ form.password}} {{ form.password.label(placeholder ="a") }}
+            </div>
+            {% if form.password.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="input-bx">
+                {{ form.confirm_password}} {{ form.confirm_password.label(placeholder
+                ="a") }}
+            </div>
+            {% if form.confirm_password.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.confirm_password.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="input-bx-btn">{{ form.submit }}</div>
+        </form>
+
+        <div class="auth-footer">
+            Already have an account? <a href="{{ url_for('user.login') }}">SignIn</a>
+        </div>
+    </div>
+
+    <div class="auth-img">
+        <img src="{{ url_for('static', filename='img/auth-img.webp') }}" alt="">
+    </div>
+</section>
 
 {% endblock content %}

@@ -12,7 +12,8 @@
     --white: #F7F8FC;
     --bg-color:#ffffff;
     --text-color:#111111;
-    --main-color:#c8815f;
+    --main-color:#f1c33a;
+    /* --main-color:#c8815f; */
     --big-font: 4.5rem;
     --h2-font:3.3rem;
     --h3-font:2rem;
@@ -104,7 +105,7 @@ header{
 }
 
 section{
-    padding: 100px 14%;
+    padding: 150px 14%;
 }
 
 .home{
@@ -183,6 +184,7 @@ header.sticky{
 }
 
 .row img{
+    border-radius: 10px;
     width: 100%;
     height: auto;
 }
@@ -230,7 +232,7 @@ header.sticky{
 }
 
 .row:hover i {
-    background: var(--main-color);
+    background: var(--text-color);
     color: var(--bg-color);
 }
 
@@ -421,17 +423,14 @@ footer{
 .auth-container{
 display: flex;
 justify-content: center;
-align-items: center;
 }
 
 .auth-box{
     display:flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
+    border-radius: 10px 0 0 10px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    width:600px;
+    width:100%;
 }
 
 .signin-text{
@@ -442,19 +441,29 @@ align-items: center;
     background-color: var(--main-color);
     width: 100%;
     padding: 1rem 0;
-    border-radius: 10px 10px 0px 0px;
+    border-radius: 10px 0px 0px 10px;
 }
+.signin-text span, .signin-text p{
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+   
 
-
-
-.signin-text h2, .signin-text p{
-    font-style: normal;
+}
+.signin-text span{  
+    font-size: 1.7rem;
     font-weight: 600;
-    font-size: 0.8rem;
-    line-height: 29px;
-    color: var(--bg-color);
     text-transform: capitalize;
+    color: var(--bg-color);
 }
+
+.signin-text p{
+    font-style: normal;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--bg-color);
+}
+
 
 .signin-text img{
     height: 50px;
@@ -590,7 +599,7 @@ form{
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
-    font-size: 10px;
+    font-size: 0.8rem;
     font-weight: 600;
     width: 100%;
 }
@@ -602,7 +611,8 @@ form{
     gap: 2px;
 }
 
-.auth-box span {
+.auth-box .auth-footer {
+    font-weight: 600;
     font-size: 0.8rem;
     text-align: center;
     display: flex;
@@ -614,10 +624,21 @@ form{
 .auth-box  a{
     margin-left: 0.2rem;
     text-decoration: none;
-    color: var(--main-color);
+    color: #40ad57;
 
 }
 
+.auth-img{
+    width: 100%;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0 10px 10px 0;
+}
+
+.auth-img img{
+    border-radius: 0 10px 10px 0;
+    width: 100%;
+    height: 100%;
+}
 /* Product  page*/
 #p-wrapper{
     display: flex;
@@ -630,6 +651,7 @@ form{
 }
 
 .product img{
+    border-radius: 10px;
     width: 100%;
     height: auto;
 }
