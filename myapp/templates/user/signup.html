@@ -5,7 +5,7 @@
     <div class="auth-img">
         <img src="{{ url_for('static', filename='img/auth-img2.webp') }}" alt="">
     </div>
-    
+
     <div class="auth-box">
         <div class="signin-text">
             <span>Get started</span>
@@ -68,6 +68,7 @@
             </div>
             {% endif %}
 
+            <button type="button" id="toggleButton" onclick="togglePasswordVisibility()">Reveal password</button>
             <div class="input-bx-btn">{{ form.submit }}</div>
         </form>
 

@@ -58,4 +58,19 @@ minus.addEventListener("click", ()=>{
 
 // Quantity wrapper ends
 
+// Toogle password visibility on auth
+function togglePasswordVisibility() {
+    var passwordInput = document.getElementById("password");
+    var confirm_passwordInput = document.getElementById("confirm_password");
+    var toggleButton = document.getElementById("toggleButton");
 
+    if (passwordInput.type && confirm_passwordInput.type === "password") {
+      passwordInput.type = "text";
+      confirm_passwordInput.type = "text";
+      toggleButton.textContent = "Hide password";
+    } else {
+      passwordInput.type = "password";
+      confirm_passwordInput.type = "password"
+      toggleButton.textContent = "Reveal password";
+    }
+  }

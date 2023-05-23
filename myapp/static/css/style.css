@@ -554,12 +554,21 @@ justify-content: center;
 form{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     padding: 1rem;
     width: 100%;
 }
 
+form button{
+    border: none;
+    outline: none;
+    background: var(--main-color);
+    border-radius: 0.5rem;
+    padding: 8px 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: var(--bg-color);
+    margin: 10px;
+}
 
 .input-bx-btn input[type="submit"]{
     border: none;
@@ -611,6 +620,8 @@ form{
    font-size: 0.7rem;
 }
 .invalid-feedback {
+    display: flex;
+    flex-direction: column;
     color: #fc1a1a;
     border-radius: 0.5rem;
     width: 100%;
