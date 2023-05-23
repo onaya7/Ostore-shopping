@@ -13,7 +13,7 @@
     --bg-color:#ffffff;
     --text-color:#111111;
     --main-color:#f1c33a;
-    /* --main-color:#c8815f; */
+    --auth-color:#fec116;
     --big-font: 4.5rem;
     --h2-font:3.3rem;
     --h3-font:2rem;
@@ -86,7 +86,7 @@ header{
 
 .header-icon i{
     font-size: 32px;
-    color: var(--text-color);
+    color: var(--auth-color);
     margin-right: 20px;
     transition: all .36s ease;
 }
@@ -429,7 +429,6 @@ justify-content: center;
     display:flex;
     flex-direction: column;
     border-radius: 10px 0 0 10px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     width:100%;
 }
 
@@ -438,7 +437,6 @@ justify-content: center;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--main-color);
     width: 100%;
     padding: 1rem 0;
     border-radius: 10px 0px 0px 10px;
@@ -454,7 +452,7 @@ justify-content: center;
     font-size: 1.7rem;
     font-weight: 600;
     text-transform: capitalize;
-    color: var(--bg-color);
+    color: var(--main-color)
 }
 
 .signin-text p{
@@ -480,6 +478,38 @@ justify-content: center;
     font-weight: 700;
    
 }
+
+.reset-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    border-radius: 10px;
+    background-color: var(--main-color);
+}
+
+.reset-text span, .reset-text p{
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    color: var(--bg-color);
+   
+
+}
+.reset-text span{  
+    font-size: 1.7rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.reset-text p{
+    font-style: normal;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
 
 .input-bx{
     position: relative;
@@ -627,13 +657,14 @@ form{
 .auth-img{
     width: 100%;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 0 10px 10px 0;
+    border-radius:10px;
 }
 
 .auth-img img{
-    border-radius: 0 10px 10px 0;
+    border-radius: 10px;
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 /* Product  page*/
 #p-wrapper{

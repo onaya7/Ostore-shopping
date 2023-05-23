@@ -4,7 +4,7 @@
 <section class="auth-container">
     <div class="auth-box">
         <div class="signin-text">
-            <span>Welcome Back to <i class='bx bxs-wink-smile bx-fade-up' ></i>store</span>
+            <span>Welcome Back</span>
         </div>
         <form method="POST">
             {{ form.hidden_tag() }} {% with messages = get_flashed_messages() %} {% if
@@ -55,7 +55,7 @@
     </div>
 
     <div class="auth-img">
-        <img src="{{ url_for('static', filename='img/auth-img.webp') }}" alt="" />
+        <img src="{{ url_for('static', filename='img/auth-signup.jpg') }}" alt="" />
     </div>
 </section>
 

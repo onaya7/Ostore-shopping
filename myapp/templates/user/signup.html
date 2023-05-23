@@ -2,6 +2,10 @@
 <!-- SignUp page -->
 
 <section class="auth-container">
+    <div class="auth-img">
+        <img src="{{ url_for('static', filename='img/auth-img2.webp') }}" alt="">
+    </div>
+    
     <div class="auth-box">
         <div class="signin-text">
             <span>Get started</span>
@@ -70,10 +74,6 @@
         <div class="auth-footer">
             Already have an account? <a href="{{ url_for('user.login') }}">SignIn</a>
         </div>
-    </div>
-
-    <div class="auth-img">
-        <img src="{{ url_for('static', filename='img/auth-img.webp') }}" alt="">
     </div>
 </section>
 
