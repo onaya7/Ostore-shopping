@@ -49,7 +49,7 @@ class Product(db.Model):
     
 
     def __repr__(self):
-        return f"Product('id:{self.id}')"
+        return f"Product('id:{self.id}','name:{self.name}')"
 
 class Cart(db.Model):
     __tablename__ = "cart"

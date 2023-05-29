@@ -18,7 +18,7 @@
         <div class="featured-content">
                             {% for product in women %}
                             <div class="product">
-                                <a href="{{url_for('product.single_category' , id = product.id)}}"><img src="{{ url_for('product.media', filename=product.filename) }}" alt="fea1"></a>
+                                <a href="{{url_for('product.singleproduct' , id = product.id)}}"><img src="{{ url_for('product.media', filename=product.filename) }}" alt="fea1"></a>
     
                                 <div class="p-text">
                                     <h5>{{product.name}}</h5>

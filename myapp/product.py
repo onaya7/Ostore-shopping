@@ -28,7 +28,7 @@ def products():
     rows = Product.query.all()
     return render_template("product/products.html", rows=rows)
 
-@product.route("/product<int:id>")
+@product.route("/product/<int:id>")
 def singleproduct(id):
     rows = Product.query.filter_by(id=id).first()
     
@@ -55,7 +55,7 @@ def kids():
 
 @product.route("/category/sneakers")
 def sneakers():
-    sneakers = Categories.query.filter_by(name='sneakers')
+    sneakers = Categories.query.filter_by(name='sneakers').first()
     sneakers = sneakers.product
     return render_template("product/sneakers.html")
 
