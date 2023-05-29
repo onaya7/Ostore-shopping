@@ -74,3 +74,26 @@ function togglePasswordVisibility() {
       toggleButton.textContent = "Reveal password";
     }
   }
+
+  $(document).ready(function(){
+
+    $('#qty-form').on ('submit', function(event){
+            $.ajax({
+                data : {
+                    quantity : $('#qty-num').val(),
+                },
+                
+                type : 'POST',
+                url: '/process_quantity'
+                
+            })
+            
+            .done(function(data){
+                    console.log(data.message)
+                   
+                    $('#message').text(data.message);
+    
+            });
+            event.preventDefault();
+    });
+});

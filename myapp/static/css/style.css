@@ -63,31 +63,46 @@ header{
 .navlist a:hover{
     color: var(--main-color);
 }
-
+.header-icon{
+    display: flex;
+}
 .dropdown-list{
     position:absolute;
     display: none;
     width: 200px;
     background-color: var(--bg-color);
-    border-radius: 0.5rem;
-    box-shadow: 0px 0px 10px rgb(0 0 0 / 10%);
+    /* box-shadow: 0px 0px 10px rgb(0 0 0 / 10%); */
    
 }
 
 .dropdown-list a{
-    display:block;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    color: var(--text-color);
 }
+
+.dropdown-list a i{
+    font-size: 15px;
+}
+
 
 .dropdown-list.open{
     display: block;
 }
 
 
-
+.header-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
 .header-icon i{
     font-size: 32px;
-    color: var(--auth-color);
-    margin-right: 20px;
+    color:var(--text-color);
     transition: all .36s ease;
 }
 
@@ -178,6 +193,7 @@ header.sticky{
     margin-top: 4rem;
 }
 
+
 .row{
     position: relative;
     transition: all .35s ease;
@@ -232,7 +248,7 @@ header.sticky{
 }
 
 .row:hover i {
-    background: var(--text-color);
+    background: var(--auth-color);
     color: var(--bg-color);
 }
 
@@ -485,7 +501,6 @@ justify-content: center;
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 1rem 0;
     border-radius: 10px;
     background-color: var(--main-color);
 }
@@ -493,13 +508,13 @@ justify-content: center;
 .reset-text span, .reset-text p{
     text-align: center;
     width: 100%;
-    padding: 10px;
+    padding: 5px 10px;
     color: var(--bg-color);
    
 
 }
 .reset-text span{  
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: 600;
     text-transform: capitalize;
 }
@@ -513,7 +528,6 @@ justify-content: center;
 
 .input-bx{
     position: relative;
-    width: 100%;
     height:45px;
     margin: 10px;
 }
@@ -691,9 +705,15 @@ form button{
 .product img{
     border-radius: 10px;
     width: 100%;
-    height: auto;
+    height: 450px;
+    object-fit: cover;
 }
 
+.product{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .product .p-text{
     display: flex;
     justify-content: space-between;
@@ -714,8 +734,10 @@ form button{
     transition: .4s;
     color: var(--text-color);
     border-radius: 0.5rem;
-    
-   
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
 } 
 
 .p-cart:hover{
@@ -744,6 +766,7 @@ form button{
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 20px;
 }
 .single-text{
     display: flex;
@@ -766,16 +789,38 @@ form button{
 
 .qty-wrapper{
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+    border-top: 1px solid var(--text-color) ;
+    border-bottom: 1px solid var(--text-color);
+    padding: 30px 0;
 }
+
+.qty-wrapper form{
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.qty-wrapper a{
+     border: 1px solid var(--main-color);
+     transition: .4s;
+     color: var(--text-color);
+     border-radius: 0.5rem;
+     display: flex;
+     width: 100%;
+     align-items: center;
+     justify-content: center;
+}
+
 .qty{
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--bg-color);
   border-radius: 12px;
-  width: 150px;
+  width: 100%;
   border: 1px solid #ddc0c0;
 }
 
@@ -802,12 +847,7 @@ form button{
     border-left: 2px solid #ddc0c0;
 }
 
-.qty-wrapper{
-    margin-top: 10px;
-    border-top: 1px solid var(--text-color) ;
-    border-bottom: 1px solid var(--text-color);
-    padding: 30px 0;
-}
+
 
 .s-cart{
     padding: 10px;
@@ -1224,7 +1264,7 @@ table{
 
 @media (max-width: 1000px){
     header{
-        padding: 7px 4%;
+        padding: 20px 4%;
         transition:  0.2s;
     }
 
@@ -1246,10 +1286,6 @@ table{
         cursor: pointer;
     }
 
-    .header-icon{
-        display: inline-flex;
-    }
-
     .navlist{
         position: absolute;
         top: 100%;
@@ -1260,9 +1296,9 @@ table{
         display: flex;
         align-items: center;
         flex-direction: column;
-        padding: 50px 10px;
+        /* padding: 50px 10px; */
         transition: all .45s ease;
-        gap: 20px;
+        gap: 5px;
     }
 
     .navlist a{
@@ -1276,7 +1312,10 @@ table{
 
     .add-product-bx {
         width: 400px;
-}
+    }
+    .auth-img{
+        display: none;
+    }
 }
 
 @media (max-width: 400px){
@@ -1292,7 +1331,7 @@ table{
     }
 
     section{
-        padding: 80px 0;
+        padding: 80px 10px;
         transition: .1s;
     }
     .cart-content table, th, td {

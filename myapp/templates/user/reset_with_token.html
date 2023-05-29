@@ -7,7 +7,7 @@
             <div class="reset-text">
                 
                 <span>Reset your password</span>
-                <p> Please enter a new password</p>
+                <p> Please enter your new password</p>
             </div>
             <form method="POST">
                 {{ form.hidden_tag() }}
@@ -46,7 +46,9 @@
                    </div>
             {% endif %}
 
-            {{ form.submit }}
+            <div class="input-bx-btn">
+              {{ form.submit }}
+            </div>
             </form>
             <span>
 

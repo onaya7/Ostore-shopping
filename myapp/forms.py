@@ -55,5 +55,7 @@ class EmailForm(FlaskForm):
 
 
 class PasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired(), EqualTo('password')])
+    password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm_password'), Length(min=5, max=50, message="Password is too short"), Regexp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$',message='Password must include at least one uppercase letter, one lowercase letter, one number, and one special character')])
+    confirm_password = PasswordField(
+        'Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Submit')
