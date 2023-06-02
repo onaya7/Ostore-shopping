@@ -31,8 +31,6 @@
                 </div>
 
                 <p id="price">${{product.price}}</p>
-
-                <a class="p-cart" href="{{ url_for('user.addToCart', product_id = product.id) }}">Add to cart</a>
             </div>
         </div>
         {% endfor %}

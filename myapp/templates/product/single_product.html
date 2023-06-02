@@ -12,43 +12,35 @@
 </div>
 {% endif %}
 {% endwith %}
-
+   
     <div class="single-container">
-        {% if row %}
         <div class="single-img">
-            <img src="{{ url_for('product.media', filename=row.filename) }}" alt="men">
+            <img src="{{ url_for('product.media', filename=product.filename) }}" alt="men">
         </div>
 
         <div class="single-text">
-            <h2>{{row.name}}</h2>
-            <p id="price">${{row.price}}</p>
-            <p id="text">{{row.description}}</p>
+            <h2 id="#row-name">{{product.name}}</h2>
+            <p id="price">${{product.price}}</p>
+            <p id="text">{{product.description}}</p>
+            <p id="text">{{product.id}}</p>
 
 
             <p>Availability:<span>In stock</span></p>
             <p>Sku:<span>85674jdhu3</span></p>
-            <p id="text">quantity{{row.quantity}}</p>
-
-
-
             <div class="qty-wrapper">
-                <form id="qty-form">
-                    <div class="qty">
-                        <!-- <span class="minus">-</span>
-                        <span id="num" class="num"></span>
-                        <span class="plus">+</span> -->
-                        <input name="quantity" type="number" id="qty-num" min="0" value="1">
-                        <button type="submit">add</button>
-                    </div>
-                </form> 
-                <a class="p-cart" href="/addToCart/{{row.id}}">Add to cart</a>
-                <div id="message"></div>
+             
+                <form method="POST" action="{{ url_for('user.add_to_cart', product_id=product.id) }}"> 
+                    <input type="number" id="qty-num" min="0" value="1" name="quantity">
+                    <button type="submit">Add to Cart</button>
+                </form>
             </div>
 
         </div>
-        <!-- {% endif %} -->
+      
+       
     </div>
-
+  
+    
     <h5>We found other products you might like</h5>
     <div class="line"></div>
 

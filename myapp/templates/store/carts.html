@@ -1,109 +1,113 @@
 {% extends 'store/base.html' %}
 
 {% block content %}
-	
-	  <!-- cart view -->
-	  <section class="cart" id="">
-		{% with messages = get_flashed_messages() %}
-        {% if messages %}
-          <div class="success-feedback">
-          {% for message in messages %}
-          <span>{{message}}</span>
-          {% endfor %}
-        </div>
-        {% endif %}
-      {% endwith %}
-		<div class="caption"> Shopping Cart</div>
-		{% if not cart %}
-	
-					<div class="empty-cart">
-						<p>Your cart is currently empty.</p>
-						<a href="{{ url_for('product.products') }}">CONTINUE SHOPPING</a>
-					</div>
 
-		{% else %}
+<!-- cart view -->
+<section class="cart" id="">
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	<div class="success-feedback">
+		{% for message in messages %}
+		<span>{{message}}</span>
+		{% endfor %}
+	</div>
+	{% endif %}
+	{% endwith %}
+	<div class="caption"> Shopping Cart</div>
+	{% if not cart_item %}
 
-			
-			<div class="cart-container">
-				<div class="cart-content">
-					<table>
-						<tr>
-							<th></th>
-							<th></th>
-							<th>Product</th>
-							<th>Price</th>
-							<th>Quantity</th>
-						</tr>
+	<div class="empty-cart">
+		<p>Your cart is currently empty.</p>
+		<a href="{{ url_for('product.products') }}">CONTINUE SHOPPING</a>
+	</div>
 
-						{% for item in cart %}
-						<tr>
-							<td><a href="{{ url_for('user.removeFromCart', product_id=item.id) }}"><i class='bx bx-x' ></i></a></td>
-							<td><div id="t-img"><img src="{{ url_for('product.media', filename=item.filename) }}" alt=""></div></td>
-							<td>{{item.name}}</td>
-							<td>${{item.price}}</td>
-							<td>{{item.quantity}}</td>
-						</tr>
-						{% endfor %}						
-					</table>
-					
+	{% else %}
+
+
+	<div class="cart-container">
+		<div class="cart-content">
+			<table>
+				<tr>
+					<th></th>
+					<th></th>
+					<th>Product</th>
+					<th>Price</th>
+					<th>Quantity</th>
+				</tr>
+
+				{% for item in cart_item%}
+				<tr>
+					<td><a href="{{ url_for('user.delete_cart', product_id=item.id ) }}"><i class="bx bx-x"></i></a>
+					</td>
+					<td>
+						<div id="t-img"><img src="{{ url_for('product.media', filename=item.filename) }}" alt=""></div>
+					</td>
+					<td>{{ item.name}}</td>
+					<td>{{ item.price }}</td>
+					<td>{{ item.quantity }}</td>
+
+				</tr>
+				{% endfor %}
+
+			</table>
+
+		</div>
+
+
+		<div class="checkout">
+			<h3>Cart total</h3>
+			<div class="checkout-content">
+				<div class="subtotal">
+					<p>SUBTOTAL</p>
+					<span>${{subtotal}}</span>
 				</div>
-			
 
-					<div class="checkout">
-						<h3>Cart total</h3>
-								<div class="checkout-content">
-									<div class="subtotal">
-										<p>SUBTOTAL</p>
-										<span>${{subtotal}}</span>
-									</div>
-
-									<div class="total">
-										<p>TOTAL</p>
-										<span>${{subtotal}}</span>
-									</div>
-								</div>  
-
-						
-							
-									<button type="button" class="checkout-btn" onclick="payWithPaystack()"> Proceed to checkout</button>
-							
-					</div>
-
-
+				<div class="total">
+					<p>TOTAL</p>
+					<span>${{subtotal}}</span>
+				</div>
 			</div>
-			
-		{% endif %}
-		
-	</section>
 
-		{% block scripts %}
-		<script>
-			function payWithPaystack(){
-				var handler = PaystackPop.setup({
-					key: "{{ paystack_pk }}",
-					email: "{{ email }}",
-					amount: "{{ subtotal }}" * 100,
-					ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-					metadata: {
-						custom_fields: [
-							{
-								display_name: "{{name}}",
-								variable_name: "{{ email }}",
-								mobile_number:  "",
-								value: "+2348012345678"
-							}
-						]
-					},
-					callback: function(response){
-						// alert('success. transaction ref is ' + response.reference);
-					},
-					onClose: function(){
-						alert('window closed');
+
+
+			<button type="button" class="checkout-btn" onclick="payWithPaystack()"> Proceed to checkout</button>
+
+		</div>
+
+
+	</div>
+
+	{% endif %}
+
+</section>
+
+{% block scripts %}
+<script>
+	function payWithPaystack() {
+		var handler = PaystackPop.setup({
+			key: "{{ paystack_pk }}",
+			email: "{{ email }}",
+			amount: "{{ subtotal }}" * 100,
+			ref: '' + Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+			metadata: {
+				custom_fields: [
+					{
+						display_name: "{{name}}",
+						variable_name: "{{ email }}",
+						mobile_number: "",
+						value: "+2348012345678"
 					}
-				});
-				handler.openIframe();
+				]
+			},
+			callback: function (response) {
+				// alert('success. transaction ref is ' + response.reference);
+			},
+			onClose: function () {
+				alert('window closed');
 			}
-		</script>
-	{% endblock %}
+		});
+		handler.openIframe();
+	}
+</script>
 {% endblock %}
-
+{% endblock %}

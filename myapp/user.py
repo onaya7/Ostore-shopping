@@ -189,73 +189,63 @@ def getLoginDetails():
     return noOfItems
 
 
-@user.route("/process_quantity", methods=["POST"])
-def process_quantity():
-    quantity = int(request.form.get("quantity"))
-    print(quantity)
-    return jsonify({'message': 'Quantity updated successfully'})
 
-def update_cart_item(product_id, quantity):
-    cart_item = Cart.query.filter_by(product_id=product_id, user=current_user).first()
+
+@user.route("/add_to_cart/<int:product_id>", methods=["GET", "POST"])
+@login_required
+def add_to_cart(product_id):
+    
+    quantity = int(request.form.get('quantity'))
+    
+   
+    cart_item = Cart.query.filter_by(user_id=current_user.id, product_id=product_id).first()
+    print(cart_item)
     if cart_item:
-        cart_item.quantity = quantity
+        # if the cart item already exist in the cart,update the quantity
+        cart_item.quantity += quantity
         db.session.commit()
         flash("This item is already in your cart, quantity updated!", "success")
+        
     else:
-        user = User.query.get(current_user.id)
-        user.add_to_cart(product_id, quantity)
-
-@user.route("/addToCart/<int:product_id>", methods=["POST"])
-@login_required
-def addToCart(product_id):
-    quantity = int(request.form.get("quantity"))
-    update_cart_item(product_id, quantity)
+        # Otherwise, create a new cart item
+        cart_item = Cart(user_id=current_user.id, product_id=product_id, quantity=quantity)
+        db.session.add(cart_item)
+        db.session.commit()
+        flash("Item added successfully", "success")
     return redirect(url_for("product.products"))
-
-def get_cart_items():
-    cart = (
-        Product.query.join(Cart)
-        .add_columns(
-            Cart.quantity, Product.price, Product.name, Product.id, Product.filename
-        )
-        .filter_by(user=current_user)
-        .all()
-    )
-    return cart
-
-def calculate_subtotal(cart):
-    subtotal = sum(int(item.price) * int(item.quantity) for item in cart)
-    return subtotal
 
 @user.route("/carts", methods=["GET", "POST"])
 @login_required
 def carts():
+    # noOfItems = getLoginDetails()
     paystack_pk = os.getenv("PAYSTACK_PUBLIC_KEY")
-    noOfItems = getLoginDetails()
     user = User.query.filter_by(id=current_user.id).first()
     email = user.email
     name = user.firstname
-    cart = get_cart_items()
-    subtotal = calculate_subtotal(cart)
     
-    if request.method == "POST":
-        qty = request.form.get("qty")
-        idpd = request.form.get("idpd")
-        update_cart_item(idpd, qty)
-        cart = get_cart_items()
-        subtotal = calculate_subtotal(cart)
-        print(email)
-        
-    return render_template(
-        "store/carts.html", cart=cart, noOfItems=noOfItems, subtotal=subtotal, paystack_pk=paystack_pk, email=email, name=name
+    # Retrieve cart items and associated products in a single query
+    cart_item = (
+        db.session.query(Cart.quantity, Product.price, Product.name, Product.id, Product.filename)
+        .join(Cart)
+        .filter_by(user=current_user)
+        .all()
     )
 
+    subtotal = sum(int(item.price) * int(item.quantity) for item in cart_item)
+    
+    return render_template(
+        "store/carts.html", 
+        cart_item=cart_item,
+        subtotal=subtotal,
+        paystack_pk=paystack_pk,
+        email=email,
+        name=name
+    )
 
-@user.route("/removeFromCart/<int:product_id>")
+@user.route("/delete_cart/<int:product_id>")
 @login_required
-def removeFromCart(product_id):
+def delete_cart(product_id):
     item_to_remove =Cart.query.filter_by(user=current_user).first()
-    print(item_to_remove)
     db.session.delete(item_to_remove)
     db.session.commit()
     flash("Your item has been removed from your cart!", "success")

@@ -1,7 +1,7 @@
 const header = document.querySelector("header");
 
-window.addEventListener ("scroll",  function(){
-    header.classList.toggle("sticky",  window.scrollY > 0)
+window.addEventListener("scroll", function () {
+    header.classList.toggle("sticky", window.scrollY > 0)
 });
 
 let menu = document.querySelector('#menu-icon');
@@ -14,7 +14,7 @@ menu.onclick = () => {
     navlist.classList.toggle('open');
 }
 
-dropdown.onclick = () =>{
+dropdown.onclick = () => {
     dropdownList.classList.toggle('open')
 }
 
@@ -29,32 +29,32 @@ const sr = ScrollReveal({
     reset: true
 })
 
-sr.reveal('.home-text', {delay:280, origin:'bottom'}) 
+sr.reveal('.home-text', { delay: 280, origin: 'bottom' })
 
-sr.reveal('.featured, .cta, .new, .brand, .contact', {delay:200, origin:'bottom'})
+sr.reveal('.featured, .cta, .new, .brand, .contact', { delay: 200, origin: 'bottom' })
 
 
 // Quantity wrapper
-const plus = document.querySelector(".plus"),
-minus = document.querySelector(".minus"),
-num = document.querySelector(".num");
+// const plus = document.querySelector(".plus"),
+// minus = document.querySelector(".minus"),
+// num = document.querySelector(".num");
 
-let a =1;
+// let a =1;
 
-plus.addEventListener("click", ()=>{
-    a++;
-    a = (a<10) ? "0" + a : a;
-    num.innerText = a;
-    console.log(a);
-});
+// plus.addEventListener("click", ()=>{
+//     a++;
+//     a = (a<10) ? "0" + a : a;
+//     num.innerText = a;
+//     console.log(a);
+// });
 
-minus.addEventListener("click", ()=>{
-    if (a > 1){
-        a--;
-        a = (a<10) ? "0" + a : a;
-        num.innerText = a;
-    }
-});
+// minus.addEventListener("click", ()=>{
+//     if (a > 1){
+//         a--;
+//         a = (a<10) ? "0" + a : a;
+//         num.innerText = a;
+//     }
+// });
 
 // Quantity wrapper ends
 
@@ -65,35 +65,37 @@ function togglePasswordVisibility() {
     var toggleButton = document.getElementById("toggleButton");
 
     if (passwordInput.type && confirm_passwordInput.type === "password") {
-      passwordInput.type = "text";
-      confirm_passwordInput.type = "text";
-      toggleButton.textContent = "Hide password";
+        passwordInput.type = "text";
+        confirm_passwordInput.type = "text";
+        toggleButton.textContent = "Hide password";
     } else {
-      passwordInput.type = "password";
-      confirm_passwordInput.type = "password"
-      toggleButton.textContent = "Reveal password";
+        passwordInput.type = "password";
+        confirm_passwordInput.type = "password"
+        toggleButton.textContent = "Reveal password";
     }
-  }
+}
 
-  $(document).ready(function(){
+// $(document).ready(function () {
+//     // Ajax for adding to cart
+//     $('#add-to-cart-form').on('submit', function (event) {
+//         $.ajax({
+//             data: {
+//                 quantity: $('#qty-num').val(),
+//                 product_id:$('#product-id').val(),
+//             },
 
-    $('#qty-form').on ('submit', function(event){
-            $.ajax({
-                data : {
-                    quantity : $('#qty-num').val(),
-                },
-                
-                type : 'POST',
-                url: '/process_quantity'
-                
-            })
-            
-            .done(function(data){
-                    console.log(data.message)
-                   
-                    $('#message').text(data.message);
-    
-            });
-            event.preventDefault();
-    });
-});
+//             type: 'POST',
+//             url: '/addToCart'
+
+//         })
+
+//             .done(function (data) {
+//                 console.log(data.message)
+
+//                 // $('#message').text(data.message);
+
+//             });
+//         event.preventDefault();
+//     });
+
+// });

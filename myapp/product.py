@@ -1,7 +1,6 @@
 import os
 import hmac
 import hashlib
-import json
 import requests
 import uuid
 from flask import (
@@ -30,9 +29,9 @@ def products():
 
 @product.route("/product/<int:id>")
 def singleproduct(id):
-    rows = Product.query.filter_by(id=id).first()
+    product = Product.query.filter_by(id=id).first()
     
-    return render_template("product/single_product.html", row=rows)
+    return render_template("product/single_product.html", product=product)
 
 # query product  by category route
 @product.route("/category/men")
@@ -51,25 +50,29 @@ def women():
 def kids():
     kids = Categories.query.filter_by(name='kids').first()
     kids = kids.product
-    return render_template("product/kids.html")
+    return render_template("product/kids.html", kids=kids)
 
 @product.route("/category/sneakers")
 def sneakers():
     sneakers = Categories.query.filter_by(name='sneakers').first()
     sneakers = sneakers.product
-    return render_template("product/sneakers.html")
+    return render_template("product/sneakers.html", sneakers=sneakers)
 
 @product.route("/category/heels")
 def heels():
-
-    return render_template("product/heels.html")
+    heels = Categories.query.filter_by(name='heels').first()
+    heels = heels.product
+    return render_template("product/heels.html", heels=heels)
 
 @product.route("/category/watches")
 def watches():
-
-    return render_template("product/watches.html")
+    watches = Categories.query.filter_by(name='watches').first()
+    watches = watches.product
+    return render_template("product/watches.html", watches=watches)
 # query product  by category route ends......
 # ----------------------------
+
+
 
 def get_categories(name):
     categories=Categories.query.filter_by(name=name).first()
@@ -90,8 +93,6 @@ def add_product():
         )
         save_file=image.save(file_path)
         print(save_file)
-       
-        
         name = request.form.get("name")
         price = request.form.get("price")
         description = request.form.get("description")
@@ -104,7 +105,6 @@ def add_product():
         flash(f"A new product has been added sucessfully", 'success')
         return redirect(url_for("product.add_product"))
     return render_template("product/addproduct.html " ,cat=cat)
-
 
 @product.route("/media/<path:filename>")
 def media(filename):
