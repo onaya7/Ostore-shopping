@@ -1,12 +1,15 @@
-from flask import Blueprint, render_template, redirect, request, url_for, flash
-from flask_login import login_user, current_user , logout_user, login_required
-from myapp.models import Admin, User ,db
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
+
+from myapp.forms import LoginForm, RegistrationForm
 from myapp.instance import bcrypt
-from myapp.forms import RegistrationForm, LoginForm
-from myapp.models import Admin
+from myapp.models import Admin, User, db
 
+admin = Blueprint(
+    "admin",
+    __name__,
+)
 
-admin=Blueprint('admin', __name__,)
 
 ####   ADMIN AUTHENTICATION   #######
 @admin.route("/users")
@@ -14,6 +17,7 @@ def users():
     user = User.query.all()
 
     return render_template("admin/users.html", title="Users", user=user)
+
 
 @admin.route("/create_user", methods=["GET", "POST"])
 def create_user():
@@ -37,6 +41,8 @@ def create_user():
         title="create_user",
         form=form,
     )
+
+
 # Login route
 @admin.route("/admin_login", methods=["GET", "POST"])
 def admin_login():
@@ -48,7 +54,9 @@ def admin_login():
         if user:
             login_user(user, remember=form.remember.data)
             next_page = request.args.get("next")
-            return redirect(next_page) if next_page else redirect(url_for("users.users"))
+            return (
+                redirect(next_page) if next_page else redirect(url_for("users.users"))
+            )
         else:
             flash("Login Unsuccessful. Please check username and password", "danger")
     return render_template("user/login.html", title="Login", form=form)
@@ -59,6 +67,7 @@ def admin_login():
 def logout():
     logout_user()
     return redirect(url_for("user.home"))
+
 
 @admin.route("/<int:user_id>/delete/")
 def delete_users(user_id):

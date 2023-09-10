@@ -1,23 +1,24 @@
-import os
-import hmac
 import hashlib
-import requests
+import hmac
+import os
 import uuid
+
+import requests
 from flask import (
     Blueprint,
-    render_template,
-    redirect,
-    url_for,
+    current_app,
     flash,
+    jsonify,
+    redirect,
+    render_template,
     request,
     send_from_directory,
-    current_app,
-    jsonify,
+    url_for,
 )
 from werkzeug.utils import secure_filename
-from myapp.models import db, Product, Cart, User, Categories
-from myapp.user import getLoginDetails
 
+from myapp.models import Cart, Categories, Product, User, db
+from myapp.user import getLoginDetails
 
 product = Blueprint("product", __name__, static_folder="static")
 
@@ -27,60 +28,67 @@ def products():
     rows = Product.query.all()
     return render_template("product/products.html", rows=rows)
 
+
 @product.route("/product/<int:id>")
 def singleproduct(id):
     product = Product.query.filter_by(id=id).first()
-    
+
     return render_template("product/single_product.html", product=product)
+
 
 # query product  by category route
 @product.route("/category/men")
 def men():
-    men=Categories.query.filter_by(name='men').first()
+    men = Categories.query.filter_by(name="men").first()
     men = men.product
     return render_template("product/men.html", men=men)
 
+
 @product.route("/category/women")
 def women():
-    women = Categories.query.filter_by(name='women').first()
+    women = Categories.query.filter_by(name="women").first()
     women = women.product
     return render_template("product/women.html", women=women)
 
+
 @product.route("/category/kids")
 def kids():
-    kids = Categories.query.filter_by(name='kids').first()
+    kids = Categories.query.filter_by(name="kids").first()
     kids = kids.product
     return render_template("product/kids.html", kids=kids)
 
+
 @product.route("/category/sneakers")
 def sneakers():
-    sneakers = Categories.query.filter_by(name='sneakers').first()
+    sneakers = Categories.query.filter_by(name="sneakers").first()
     sneakers = sneakers.product
     return render_template("product/sneakers.html", sneakers=sneakers)
 
+
 @product.route("/category/heels")
 def heels():
-    heels = Categories.query.filter_by(name='heels').first()
+    heels = Categories.query.filter_by(name="heels").first()
     heels = heels.product
     return render_template("product/heels.html", heels=heels)
 
+
 @product.route("/category/watches")
 def watches():
-    watches = Categories.query.filter_by(name='watches').first()
+    watches = Categories.query.filter_by(name="watches").first()
     watches = watches.product
     return render_template("product/watches.html", watches=watches)
+
+
 # query product  by category route ends......
 # ----------------------------
 
 
-
 def get_categories(name):
-    categories=Categories.query.filter_by(name=name).first()
-    category_id =categories.id
+    categories = Categories.query.filter_by(name=name).first()
+    category_id = categories.id
     return category_id
 
 
-      
 @product.route("/addproduct", methods=["GET", "POST"])
 def add_product():
     cat = Categories.query.all()
@@ -91,20 +99,27 @@ def add_product():
         file_path = os.path.join(
             current_app.config["UPLOAD_FOLDER"], secure_filename(filename)
         )
-        save_file=image.save(file_path)
+        save_file = image.save(file_path)
         print(save_file)
         name = request.form.get("name")
         price = request.form.get("price")
         description = request.form.get("description")
         categories = request.form.get("categories")
         categories = get_categories(categories)
-       
-        new_pro = Product(name=name, price=price, filename=filename, description=description, categories_id=categories)
+
+        new_pro = Product(
+            name=name,
+            price=price,
+            filename=filename,
+            description=description,
+            categories_id=categories,
+        )
         db.session.add(new_pro)
         db.session.commit()
-        flash(f"A new product has been added sucessfully", 'success')
+        flash(f"A new product has been added sucessfully", "success")
         return redirect(url_for("product.add_product"))
-    return render_template("product/addproduct.html " ,cat=cat)
+    return render_template("product/addproduct.html ", cat=cat)
+
 
 @product.route("/media/<path:filename>")
 def media(filename):
@@ -112,12 +127,12 @@ def media(filename):
         current_app.config["UPLOAD_FOLDER"], filename, as_attachment=True
     )
 
+
 @product.route("/editproduct<int:id>", methods=["GET", "POST"])
 def edit_product(id):
     cat = Categories.query.all()
     rows = Product.query.filter_by(id=id).first()
     if request.method == "POST":
-      
         name = request.form.get("name")
         price = request.form.get("price")
         description = request.form.get("description")
@@ -126,9 +141,9 @@ def edit_product(id):
 
         rows.name = name
         rows.price = price
-        rows.description=description
-        rows.categories_id= categories
-        
+        rows.description = description
+        rows.categories_id = categories
+
         db.session.commit()
         flash(f"Product {rows.id} has been edited")
         return redirect(url_for("product.edit_product", id=id))
@@ -190,11 +205,10 @@ def paystack_webhook():
             print(user)
             cart = Cart.query.filter_by(user_id=user).first()
             print(cart)
-            cart_user=cart.user_id
+            cart_user = cart.user_id
             print(cart)
 
-            
-            if data["status"] == 'success':
+            if data["status"] == "success":
                 cart = Cart.query.filter_by(user_id=cart_user).first()
                 cart.is_processed = int(True)
                 db.session.commit()
