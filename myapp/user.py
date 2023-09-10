@@ -179,7 +179,6 @@ def token_reset(token):
 
 
 ##### USERS CART ROUTE ####
-
 def getLoginDetails():
     if current_user.is_authenticated:
         noOfItems = Cart.query.filter_by(user=current_user).first()
@@ -187,8 +186,6 @@ def getLoginDetails():
         noOfItems = 0
 
     return noOfItems
-
-
 
 
 @user.route("/add_to_cart/<int:product_id>", methods=["GET", "POST"])
