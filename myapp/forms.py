@@ -1,17 +1,18 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField
-from wtforms.validators import DataRequired, Length, Email,EqualTo,ValidationError
+from wtforms.validators import DataRequired, Length, Email,EqualTo,ValidationError, Regexp
 from myapp.models import User
 
 
 class RegistrationForm(FlaskForm):
-    firstname = StringField('First Name', validators=[DataRequired(), Length(min=2, max=20)])
-    lastname = StringField('last Name', validators=[DataRequired(), Length(min=2, max=20)])
-    email = StringField('Email',validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired(), EqualTo('password')])
-    confirm_password = PasswordField('Confirm Password',
-                                     validators=[DataRequired(), EqualTo('password')])
+    firstname = StringField('First name*', validators=[DataRequired(), Length(min=2, max=20)])
+    lastname = StringField('last Name*', validators=[DataRequired(), Length(min=2, max=20)])
+    email = StringField('Email', validators=[DataRequired(), Email(), Length(
+        min=6, max=35, message='Little short for an email address?')])
+    password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm_password'), Length(min=5, max=50, message="Password is too short"), Regexp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$',message='Password must include at least one uppercase letter, one lowercase letter, one number, and one special character')])
+    confirm_password = PasswordField(
+        'Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Sign Up')
 
 
@@ -22,11 +23,12 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email',
-                        validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email(), Length(
+        min=6, max=35)])
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Sign in')
+
 
 class UpdateAccountForm(FlaskForm):
     firstname = StringField('First Name',validators=[DataRequired(), Length(min=2, max=20)])
@@ -53,5 +55,7 @@ class EmailForm(FlaskForm):
 
 
 class PasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired(), EqualTo('password')])
+    password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm_password'), Length(min=5, max=50, message="Password is too short"), Regexp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$',message='Password must include at least one uppercase letter, one lowercase letter, one number, and one special character')])
+    confirm_password = PasswordField(
+        'Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Submit')

@@ -1,0 +1,32 @@
+{% extends 'store/base.html' %} {% block content %}
+<!-- Sneakers-->
+<section class="featured-men" id="featured-men">
+    <div class="center-text">
+        <h2>Sneakers Categories</h2>
+    </div>
+    <div class="featured-content">
+        {% for product in sneakers %}
+        <div class="product">
+            <a href="{{url_for('product.singleproduct' , id = product.id)}}"><img
+                    src="{{ url_for('product.media', filename=product.filename) }}" alt="fea1" /></a>
+
+            <div class="p-text">
+                <h5>{{product.name}}</h5>
+                <i class="bx bx-heart"></i>
+            </div>
+
+            <div id="p-wrapper">
+                <div class="star">
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star"></i>
+                    <i class="bx bxs-star-half"></i>
+                </div>
+
+                <p id="price">${{product.price}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -1,4 +1,4 @@
-from re import T
+from enum import unique
 from flask import flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -21,51 +21,16 @@ def __repr__(self):
 
 #User model
 class  User(db.Model, UserMixin):
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(20), unique=False)
     lastname = db.Column(db.String(120), unique=False)
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(60), nullable=False)
-    cart = db.relationship("Cart", back_populates="user", lazy=True)
-
-    def add_to_cart(self, product_id):
-        # p = Product(id=self.id)
-        p = Product.query.filter_by(id=self.id).first()
-        c = Cart(product_id=product_id, user_id=self.id)
-        line_item = LineItem(product_id=product_id)
-        c.line_items.append(line_item)
-        db.session.add(c)
-        db.session.commit()
-        flash("Your item has been added to your cart!", "sucess")
+    carts= db.relationship("Cart", backref="user", lazy=True)
 
     def __repr__(self):
         return f"User('{self.firstname}','{self.email}', '{self.id}')"
-
-
-class LineItem(db.Model):
-    __tablename__ = "line_items"
-    id = db.Column(db.Integer, primary_key=True)
-    cart_id = db.Column(db.Integer, ForeignKey("cart.id"), nullable=True)
-    product_id = db.Column(db.Integer, ForeignKey("product.id"), nullable=True)
-    price = db.Column(db.Float)
-    cart = db.relationship("Cart", back_populates="line_items")
-    product = db.relationship("Product", back_populates="carts")
-
-
-class Cart(db.Model):
-    __tablename__ = "cart"
-    id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer, ForeignKey("product.id"), nullable=False)
-    line_items = db.relationship("LineItem", back_populates="cart")
-    user_id = db.Column(db.Integer, ForeignKey("user.id"), nullable=True)
-    user = relationship("User", back_populates="cart")
-    quantity = db.Column(db.Integer, nullable=False, default=1)
-    is_open = db.Column(db.Boolean, default=False, nullable=False)
-    is_processed = db.Column(db.Boolean, default=False, nullable = False)
-
-    def __repr__(self):
-        return f"Cart('id:{self.id}','user_id:{self.user_id}')"
-
 
 class Product(db.Model):
 
@@ -78,16 +43,55 @@ class Product(db.Model):
         db.String(89),
         nullable=True,
     )
-    carts = db.relationship("LineItem", back_populates="product")
+    description = db.Column(db.String(400), nullable= True)
+    cart_items = db.relationship('Cart', backref='product', lazy=True)
+    categories_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    
 
     def __repr__(self):
-        return f"Product('id:{self.id}')"
+        return f"Product('id:{self.id}','name:{self.name}')"
+
+class Cart(db.Model):
+    __tablename__ = "cart"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, ForeignKey("user.id"), nullable=True)
+    product_id = db.Column(db.Integer, ForeignKey("product.id"), nullable=True)
+    quantity = db.Column(db.Integer, nullable=False)
+    is_open = db.Column(db.Boolean)
+    is_processed = db.Column(db.Boolean)
+    
+    def __repr__(self):
+        return f"Cart('id:{self.id}')"
+    
+    
+class Categories(db.Model):
+    __tablename__="categories"
+    id =db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    product = db.relationship('Product', backref='categories')
+
+    def __repr__(self):
+        return f"Categories('id:{self.id}')"
+
 
 
 class CustomerInfo:
-    __tablename__ = "CustomerInfo"
+    __tablename__ = "customerInfo"
     id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(120), unique=True)
     phone_number = db.Column(db.Integer, unique=True)
     address = db.Column(db.String(500), nullable=False)
+    def __repr__(self):
+        return f"CustomerInfo('id:{self.id}')"
+    
+    
+# def add_to_cart(self, product_id):
+#     # p = Product(id=self.id)
+#     p = Product.query.filter_by(id=self.id).first()
+#     c = Cart(product_id=product_id, user_id=self.id)
+#     line_item = LineItem(product_id=product_id)
+#     c.line_items.append(line_item)
+#     db.session.add(c)
+#     db.session.commit()
+#     flash("Your item has been added to your cart!", "sucess")

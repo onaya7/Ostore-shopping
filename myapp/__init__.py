@@ -9,8 +9,6 @@ from myapp.product import product
 from myapp.config import Config
 
 
-
-
 #"""Application-factory pattern"""
 def create_app(config_name= Config):
         #BLUEPRINTS REGISTRATION

@@ -1,0 +1,77 @@
+{% extends 'store/base.html' %}
+
+
+{% block content %}
+
+<section class="add-product">
+           
+  <!-- editproduct category -->
+    <div class="add-product-bx">
+            <form method="POST" action="{{ url_for('product.edit_product', id=rows.id) }}" enctype="multipart/form-data">
+              <div class="add-product-text">
+                <h2>Edit product</h2>
+            </div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <div class="success-feedback">
+              {% for message in messages %}
+              <span>{{message}}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          {% endwith %}
+
+              <div class="add-product-input">
+                    <label for="name">Product name</label>
+                   <input type="text" name="name" value="{{rows.name}}">
+              </div>
+
+              <div class="add-product-input">
+                  <label for="categories">Category</label>
+                 <select name="categories">
+                        {% for categories in cat  %}
+                        <option >{{categories.name}}</option>
+                        {% endfor %}
+                 </select>
+            </div>
+
+             <div class="add-product-input">
+                   <label for="price">Price</label>
+                  <input type="text" name="price" value="{{rows.price}}">
+             </div>
+
+            <div class="add-product-input">
+                  <label for="description">Description</label>
+                  <textarea name="description" id="" value="{{rows.description}}"></textarea>
+            </div>
+
+            <div class="add-product-input">
+                  <label for="image">Product Image</label>
+                  <input type="file" name="image" id="" accept="image/">
+            </div>
+
+            <div class="add-product-btn">
+              <input type="submit" value="submit">
+            </div>
+       
+            </form>
+    </div>
+
+    <!-- editproduct end -->
+
+
+
+    
+</section>
+
+
+
+
+
+{% endblock  %}
+    
+
+
+
+
+

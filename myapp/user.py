@@ -1,4 +1,3 @@
-import email
 import os
 from flask_login import login_user, login_required, current_user, logout_user
 from flask import (
@@ -12,13 +11,15 @@ from flask import (
     jsonify,
 )
 from flask_mail import Message
-from platformdirs import user_config_path
-from myapp.models import db, User, Cart, Product, LineItem
+from myapp.models import db, User, Cart, Product
 from myapp.forms import  RegistrationForm, LoginForm, UpdateAccountForm, EmailForm, PasswordForm
 from myapp.instance import bcrypt , mail
 from myapp.util import ts
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import SignatureExpired
+import smtplib
+import ssl
+from email.message import EmailMessage
 
 
 
@@ -122,18 +123,33 @@ def reset_password():
         form_mail = form.email.data
 
         # sending the email confirmation link
-        msg = Message("Password Reset Request", recipients=[form_mail])
-
         token = ts.dumps(form_mail, salt="password-reset-salt")
 
         recover_url = url_for("user.token_reset", token=token, _external=True)
+        
+        email_username = os.getenv("MAIL_USERNAME")
+        email_password =  os.getenv("MAIL_PASSWORD")
+        # email_default_sender = os.getenv("MAIL_DEFAULT_SENDER")
+        email_receiver = form_mail
 
-        msg.body = "Your link is {}".format(recover_url)
-        mail.send(msg)
+        subject = "Ostore Reset password request"
+        body = f"To reset the password to continue shopping with Ostore click the link below:{recover_url}"
+        em = EmailMessage()
+        em['From'] = email_username
+        em['To'] = email_receiver
+        em['Subject'] = subject
+        em.set_content(body)
+
+
+        context = ssl.create_default_context()
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            smtp.login(email_username, email_password)
+            smtp.sendmail(email_username, email_receiver, em.as_string())
+            
         flash(
             "An email has been sent with instructions to reset your password.", "info"
         )
-
         return redirect(url_for("user.reset_password"))
     return render_template("user/reset_password.html", form=form)
 
@@ -145,7 +161,6 @@ def token_reset(token):
     try:
         # token generated
         email = ts.loads(token, salt="password-reset-salt", max_age=200)
-        print(email)
     except SignatureExpired:
         flash("The password reset link is invalid or has expired.", "warning")
         return redirect(url_for("user.login"))
@@ -164,7 +179,6 @@ def token_reset(token):
 
 
 ##### USERS CART ROUTE ####
-
 def getLoginDetails():
     if current_user.is_authenticated:
         noOfItems = Cart.query.filter_by(user=current_user).first()
@@ -173,72 +187,62 @@ def getLoginDetails():
 
     return noOfItems
 
-@user.route("/addToCart/<int:product_id>")
+
+@user.route("/add_to_cart/<int:product_id>", methods=["GET", "POST"])
 @login_required
-def addToCart(product_id):
-
-    row = Cart.query.filter_by(product_id=product_id, user=current_user).first()
-    if row:
-        # if in cart update quantity : +1
-        row.quantity += 1
+def add_to_cart(product_id):
+    
+    quantity = int(request.form.get('quantity'))
+    
+   
+    cart_item = Cart.query.filter_by(user_id=current_user.id, product_id=product_id).first()
+    print(cart_item)
+    if cart_item:
+        # if the cart item already exist in the cart,update the quantity
+        cart_item.quantity += quantity
         db.session.commit()
-        flash("This item is already in your cart, 1 quantity added!", "success")
-
-        # if not, add item to cart
+        flash("This item is already in your cart, quantity updated!", "success")
+        
     else:
-        user = User.query.get(current_user.id)
-        user.add_to_cart(product_id)
+        # Otherwise, create a new cart item
+        cart_item = Cart(user_id=current_user.id, product_id=product_id, quantity=quantity)
+        db.session.add(cart_item)
+        db.session.commit()
+        flash("Item added successfully", "success")
     return redirect(url_for("product.products"))
 
 @user.route("/carts", methods=["GET", "POST"])
 @login_required
 def carts():
+    # noOfItems = getLoginDetails()
     paystack_pk = os.getenv("PAYSTACK_PUBLIC_KEY")
-    noOfItems = getLoginDetails()
-    # display items in cart
     user = User.query.filter_by(id=current_user.id).first()
     email = user.email
     name = user.firstname
-    cart = (
-        Product.query.join(Cart)
-        .add_columns(
-            Cart.quantity, Product.price, Product.name, Product.id, Product.filename
-        )
+    
+    # Retrieve cart items and associated products in a single query
+    cart_item = (
+        db.session.query(Cart.quantity, Product.price, Product.name, Product.id, Product.filename)
+        .join(Cart)
         .filter_by(user=current_user)
         .all()
     )
 
-    subtotal = 0
-    for item in cart:
-        subtotal += int(item.price) * int(item.quantity)
-    if request.method == "POST":
-        qty = request.form.get("qty")
-        idpd = request.form.get("idpd")
-        cartitem = Cart.query.filter_by(product_id=idpd).first()
-        cartitem.quantity = qty
-        db.session.commit()
-        cart = (
-            Product.query.join(Cart)
-            .add_columns(
-                Cart.quantity, Product.price, Product.name, Product.id, Product.filename
-            )
-            .filter_by(user=current_user)
-            .all()
-        )
-        subtotal = 0
-        for item in cart:
-            subtotal += int(item.price) * int(item.quantity)
-        print(email)
+    subtotal = sum(int(item.price) * int(item.quantity) for item in cart_item)
+    
     return render_template(
-        "store/carts.html", cart=cart, noOfItems=noOfItems, subtotal=subtotal, paystack_pk=paystack_pk , email=email , name=name
+        "store/carts.html", 
+        cart_item=cart_item,
+        subtotal=subtotal,
+        paystack_pk=paystack_pk,
+        email=email,
+        name=name
     )
 
-
-@user.route("/removeFromCart/<int:product_id>")
+@user.route("/delete_cart/<int:product_id>")
 @login_required
-def removeFromCart(product_id):
+def delete_cart(product_id):
     item_to_remove =Cart.query.filter_by(user=current_user).first()
-    print(item_to_remove)
     db.session.delete(item_to_remove)
     db.session.commit()
     flash("Your item has been removed from your cart!", "success")

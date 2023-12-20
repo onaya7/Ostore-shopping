@@ -1,0 +1,73 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<!-- single page view -->
+<section class="single" id="single">
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="success-feedback">
+    {% for message in messages %}
+    <span>{{message}}</span>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+   
+    <div class="single-container">
+        <div class="single-img">
+            <img src="{{ url_for('product.media', filename=product.filename) }}" alt="men">
+        </div>
+
+        <div class="single-text">
+            <h2 id="#row-name">{{product.name}}</h2>
+            <p id="price">${{product.price}}</p>
+            <p id="text">{{product.description}}</p>
+            <p id="text">{{product.id}}</p>
+
+
+            <p>Availability:<span>In stock</span></p>
+            <p>Sku:<span>85674jdhu3</span></p>
+            <div class="qty-wrapper">
+             
+                <form method="POST" action="{{ url_for('user.add_to_cart', product_id=product.id) }}"> 
+                    <input type="number" id="qty-num" min="0" value="1" name="quantity">
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </div>
+
+        </div>
+      
+       
+    </div>
+  
+    
+    <h5>We found other products you might like</h5>
+    <div class="line"></div>
+
+    <div class="single-content">
+        <div class="product">
+            <img src="img/fea1.jpg" alt="fea1">
+
+            <div class="p-text">
+                <h5>Mens</h5>
+                <i class='bx bx-heart'></i>
+            </div>
+
+            <div id="p-wrapper">
+                <div class="star">
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star-half'></i>
+                </div>
+
+                <p id='price'>$400</p>
+
+                <a class="p-cart" href="#">Add to cart</a>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+{% endblock content %}
